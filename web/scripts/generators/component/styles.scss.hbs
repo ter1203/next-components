@@ -1,0 +1,13 @@
+@use '{{ pathToSrc }}/utils/shared';
+@import '{{ pathToSrc }}/utils/mixins';
+
+// config 
+
+$ROOT: shared.makeRoot('{{ properCase name }}');
+@function el($name) {
+  @return shared.makeSubElementName($ROOT, $name);
+}
+
+#{$ROOT} {
+  // styles here
+}

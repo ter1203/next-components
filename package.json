@@ -1,0 +1,15 @@
+{
+  "private": true,
+  "workspaces": [
+    "web",
+    "api"
+  ],
+  "scripts": {
+    "docker:compose": "docker-compose --profile web up --build",
+    "docker:compose:storybook": "docker-compose --profile storybook up --build",
+    "docker:up": "docker-compose --profile web up",
+    "docker:stop": "docker-compose --profile web --profile storybook stop",
+    "docker:restart": "docker-compose --profile web --profile storybook restart",
+    "docker:restart:web": "docker container restart web"
+  }
+}

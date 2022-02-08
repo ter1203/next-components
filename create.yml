@@ -1,0 +1,50 @@
+projectName: Test Project
+learnMoreLink: test.com
+repoOwner: Create-Inc
+repoName: test-project
+abbreviatedProjectName: testProject
+stack:
+  - kind: Next
+    frontend:
+      kind: FrontEnd
+      components:
+        - reactComponent: Text
+          version: 0
+        - reactComponent: Icon
+          version: 0
+        - reactComponent: Tooltip
+          version: 0
+        - reactComponent: Button
+          version: 0
+        - reactComponent: Link
+          version: 0
+        - reactComponent: Badge
+          version: 0
+        - reactComponent: Avatar
+          version: 0
+        - reactComponent: Toast
+          version: 0
+        - reactComponent: Modal
+          version: 0
+        - reactComponent: TextField
+          version: 0
+        - reactComponent: Select
+          version: 0
+      features: []
+      path: .
+    features:
+      - name: Comment
+        version: 0
+      - name: Attachment
+        version: 0
+      - name: Auth
+        version: 0
+    path: web
+environments:
+  - Production
+  - Staging
+  - Development
+  - Storybook
+config:
+  version: 0.0.1
+  commitHash: 293c665
