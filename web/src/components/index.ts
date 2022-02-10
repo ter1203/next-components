@@ -18,3 +18,5 @@ export type { SelectProps } from './select';
 export { TextField, TextArea } from './textfield';
 export { Avatar } from './avatar';
 export type { AvatarProps } from './avatar';
+
+export { StatCard } from './stat-card';

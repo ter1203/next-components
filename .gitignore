@@ -51,6 +51,7 @@ build/Release
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+package-lock.json
 
 # local env files
 .env.local

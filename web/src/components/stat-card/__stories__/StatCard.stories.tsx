@@ -2,24 +2,24 @@ import React, { ReactElement } from 'react';
 import clsx from 'clsx';
 import { action } from '@storybook/addon-actions';
 import { Story } from '@storybook/react';
-import type { {{ properCase name }}Props } from '../{{ properCase name }}';
-import {{ properCase name }} from '../{{ properCase name }}';
+import type { StatCardProps } from '../StatCard';
+import StatCard from '../StatCard';
 import {
   enableAddons,
   addCustomControls,
 } from '@/utils/storybook-shared';
 
 export default {
-  title: 'Components/{{ properCase name }}',
-  component: {{ properCase name }},
+  title: 'Components/StatCard',
+  component: StatCard,
 };
 
 // playground
 
-const PlaygroundTemplate: Story<{{ properCase name }}Props> = (props: {{ properCase name }}Props) => {
+const PlaygroundTemplate: Story<StatCardProps> = (props: StatCardProps) => {
   return (
     <div className="flex justify-center">
-      <{{ properCase name }} {...props} />
+      <StatCard {...props} />
     </div>
   );
 };

@@ -1,0 +1,28 @@
+@use '../../utils/shared';
+
+// config 
+
+$ROOT: shared.makeRoot('StatCard');
+@function el($name) {
+  @return shared.makeSubElementName($ROOT, $name);
+}
+
+#{$ROOT} {
+  @apply flex bg-light-gray-500;
+
+  &.size-small {
+    @apply w-[160px] h-[80px] rounded-sm shadow-sm;
+  }
+
+  &.size-medium {
+    @apply w-[240px] h-[120px] rounded-md shadow-md;
+  }
+
+  &.size-large {
+    @apply w-[320px] h-[160px] rounded-lg shadow-lg;
+  }
+}
+
+#{el('icon')} {
+  @apply
+}
