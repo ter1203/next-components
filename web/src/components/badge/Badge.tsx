@@ -1,11 +1,11 @@
-import { createCross } from '@/assets/icons';
+import { createClose } from '@/assets/icons';
 import {
   makeElementClassNameFactory,
   makeRootClassName,
   OmittedAriaProps,
   StyleProps,
-  useOptionalRef,
 } from '@/utils';
+import { useOptionalRef } from '@/hooks';
 import { ForwardRefComponent } from '@radix-ui/react-polymorphic';
 import { useButton } from '@react-aria/button';
 import { useHover } from '@react-aria/interactions';
@@ -64,7 +64,7 @@ const DEFAULT_PROPS = {
   isDismissible: false,
 } as const;
 
-const DISMISS_ICON = createCross;
+const DISMISS_ICON = createClose;
 
 const PolymorphicBadge = React.forwardRef(function PolymorphicBadge(
   { as: Comp = 'div', ...props },

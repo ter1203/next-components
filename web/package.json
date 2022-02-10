@@ -41,6 +41,7 @@
     "@tailwindcss/line-clamp": "^0.3.1",
     "apollo-upload-client": "^17.0.0",
     "clsx": "^1.1.1",
+    "graphql": "15.7.2",
     "history": "^5.0.0",
     "local-storage-fallback": "^4.1.2",
     "next": "10.2.3",
