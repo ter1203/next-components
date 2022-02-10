@@ -40,7 +40,7 @@ export type StatCardProps = StyleProps &
     /**
      * Description string of the card
      */
-    description: string;
+    description?: string;
 
     /**
      * Icon of the stat card positioned at the left-top
@@ -132,7 +132,11 @@ function StatCardComponent(
         <section className={el`content`}>
           {!!p.icon && <Icon className={el`icon`} content={p.icon} />}
           <Text type='h4' className={el`title`}>{p.title}</Text>
-          <Text type='body-sm' className={el`desc`}>{p.description}</Text>
+          {!!p.description && (
+            <Text type='body-sm' className={el`desc`}>
+              {p.description}
+            </Text>
+          )}
         </section>
 
         {(trends.length > 0 || !!p.variant) && (
