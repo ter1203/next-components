@@ -110,6 +110,14 @@ $ROOT: shared.makeRoot('StatCard');
     @apply rounded-lg;
   }
 
+  #{$ROOT}.is-hovered & {
+    @apply opacity-30;
+  }
+
+  #{$ROOT}.is-focus-visible & {
+    @apply outline-default;
+  }
+
   #{$ROOT}.is-pressed & {
     @apply opacity-50;
   }

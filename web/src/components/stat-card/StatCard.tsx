@@ -7,9 +7,14 @@ import {
   makeRootClassName,
   StyleProps,
   TooltipComponentProps,
-  useTooltipComponentProps
+  useTooltipComponentProps,
+  TooltipForwardProps,
+  useTooltipForwardProps
 } from '@/utils';
 import { useButton } from '@react-aria/button';
+import { useFocusRing } from '@react-aria/focus';
+import { useHover } from '@react-aria/interactions';
+import { mergeProps } from '@react-aria/utils';
 import { useOptionalRef } from '@/hooks';
 import type { ButtonProps } from '../button';
 import Icon, { IconData } from '../icon/Icon';
@@ -19,7 +24,8 @@ import { OptionalTooltip } from '../tooltip/Tooltip';
 import Text from '../text/Text'
 
 export type StatCardProps = StyleProps &
-  Pick<TooltipComponentProps, 'tooltipSide'> & {
+  Pick<TooltipComponentProps, 'tooltipSide'> &
+  Omit<TooltipForwardProps, 'onKeyDown' | 'onBlur'> & {
     /**
      * The size of the stat card
      * @default "medium"
@@ -82,10 +88,17 @@ function StatCardComponent(
 ): ReactElement {
   const p = { ...DEFAULT_PROPS, ...props };
   const tooltipProps = useTooltipComponentProps(p);
+  const tooltipForwardProps = useTooltipForwardProps(p);
 
   const domRef = useOptionalRef(ref)
   const isInteractive = !!p.onPress
   const { buttonProps, isPressed } = useButton(p, domRef)
+  const { hoverProps, isHovered } = useHover({});
+  const { focusProps, isFocusVisible } = useFocusRing();
+
+  const cardProps = isInteractive ? mergeProps(
+    buttonProps, hoverProps, focusProps, tooltipForwardProps
+  ) : tooltipForwardProps;
 
   // trends data for rechart to use
   const trends = useMemo(() => {
@@ -105,10 +118,14 @@ function StatCardComponent(
   return (
     <OptionalTooltip {...tooltipProps} content={p.tooltip} isInstant>
       <div
-        {...buttonProps}
+        {...cardProps}
         className={clsx(
           `${ROOT} size-${p.size}`,
-          { 'is-pressed': isPressed },
+          { 
+            'is-hovered': isHovered,
+            'is-pressed': isPressed,
+            'is-focus-visible': isFocusVisible,
+          },
           p.className
         )}
       >
