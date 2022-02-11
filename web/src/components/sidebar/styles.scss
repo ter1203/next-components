@@ -2,11 +2,80 @@
 
 // config 
 
-$ROOT: shared.makeRoot('Sidebar');
+$ROOT: shared.makeRoot('SidebarItem');
 @function el($name) {
   @return shared.makeSubElementName($ROOT, $name);
 }
 
 #{$ROOT} {
-  // styles here
 }
+
+#{el('item')} {
+  @apply flex p-[8px] gap-[20px] relative bg-transparent w-full;
+
+  &.size-small {
+    @apply p-[6px] gap-[16px];
+  }
+
+  &.size-large {
+    @apply p-[12px] gap-[24px];
+  }
+}
+
+#{el('item-icon')} {
+  @apply w-[20px] h-[20px];
+
+  #{$ROOT}.size-medium & {
+    @apply w-[24px] h-[24px];
+  }
+
+  #{$ROOT}.size-large & {
+    @apply w-[32px] h-[32px];
+  }
+}
+
+#{el('item-label')} {
+  @apply line-clamp-1;
+
+  #{$ROOT}.size-small & {
+    @apply text-[14px] leading-5;
+  }
+
+  #{$ROOT}.size-medium & {
+    @apply text-[16px] leading-6;
+  }
+
+  #{$ROOT}.size-large & {
+    @apply text-[20px] leading-8;
+  }
+}
+
+#{el('item-badge')} {
+  @apply absolute rounded-full bg-purple-600 text-white;
+
+  #{$ROOT}.size-small & {
+    @apply right-[6px] top-[6px] text-[12px] w-[20px] h-[20px];
+  }
+
+  #{$ROOT}.size-medium & {
+    @apply right-[10px] top-[10px] text-[14px] w-[20px] h-[20px];
+  }
+
+  #{$ROOT}.size-large & {
+    @apply right-[16px] top-[16px] text-[16px] w-[24px] h-[24px];
+  }
+}
+
+#{el('overlay')} {
+  @apply absolute top-0 left-0 w-full h-full bg-dark-gray-50 transition opacity-0;
+
+  #{$ROOT}.is-hovered & {
+    @apply opacity-10;
+  }
+
+  #{$ROOT}.is-pressed & {
+    @apply opacity-20;
+  }
+}
+
+
