@@ -18,7 +18,7 @@ import { mergeProps } from '@react-aria/utils';
 import { useOptionalRef } from '@/hooks';
 import type { ButtonProps } from '../button';
 import Icon, { IconData } from '../icon/Icon';
-import { trendingDown, trendingUp } from '@/assets/icons';
+import { createTrendingDown, createTrendingUp } from '@/assets/icons';
 import Badge from '../badge/Badge';
 import { OptionalTooltip } from '../tooltip/Tooltip';
 import Text from '../text/Text'
@@ -55,8 +55,9 @@ export type StatCardProps = StyleProps &
 
     /**
      * Whether the recent stat is positive or negative
+     * @default "default"
      */
-    variant?: 'positive' | 'negative'
+    variant?: 'positive' | 'negative' | 'default'
 
     /**
      * Recent trends that shows the latest trend. The value range
@@ -78,8 +79,14 @@ export type StatCardProps = StyleProps &
 const ROOT = makeRootClassName('StatCard');
 const el = makeElementClassNameFactory(ROOT);
 
+const POSITIVE_VARIANT_ICON = createTrendingUp
+const NEGATIVE_VARIANT_ICON = createTrendingDown
+
+const TRENDING_STROKE_COLOR = "#8884d8"
+
 const DEFAULT_PROPS = {
-  size: 'medium'
+  size: 'medium',
+  variant: 'default'
 } as const;
 
 function StatCardComponent(
@@ -109,19 +116,13 @@ function StatCardComponent(
     }
   }, [p.trend]);
 
-  const variantIcon = useMemo(() => {
-    if (p.variant) {
-      return (p.variant === 'positive') ? trendingUp : trendingDown;
-    }
-  }, [p.variant])
-
   return (
     <OptionalTooltip {...tooltipProps} content={p.tooltip} isInstant>
       <div
         {...cardProps}
         className={clsx(
-          `${ROOT} size-${p.size}`,
-          { 
+          `${ROOT} size-${p.size} variant-${p.variant}`,
+          {
             'is-hovered': isHovered,
             'is-pressed': isPressed,
             'is-focus-visible': isFocusVisible,
@@ -141,13 +142,22 @@ function StatCardComponent(
 
         {(trends.length > 0 || !!p.variant) && (
           <section className={el`trend`}>
-            {p.variant && (
-              <Icon content={variantIcon} className={`icon-${p.variant}`} />
+            {p.variant !== 'default' && (
+              <Icon
+                content={p.variant === 'positive' ? POSITIVE_VARIANT_ICON : NEGATIVE_VARIANT_ICON}
+                className={el`variant-icon`}
+              />
             )}
             {trends.length > 0 && (
               <ResponsiveContainer width='60%' height='50%'>
                 <LineChart data={trends} width={200} height={160}>
-                  <Line type="monotone" dot={false} dataKey="v" stroke="#8884d8" strokeWidth={2} />
+                  <Line
+                    type="monotone"
+                    dot={false}
+                    dataKey="v"
+                    stroke={TRENDING_STROKE_COLOR}
+                    strokeWidth={2}
+                  />
                 </LineChart>
               </ResponsiveContainer>
             )}

@@ -8,18 +8,18 @@ $ROOT: shared.makeRoot('StatCard');
 }
 
 #{$ROOT} {
-  @apply flex bg-light-gray-500 relative flex-shrink-0 gap-2 justify-between p-2 rounded-md;
+  @apply flex bg-light-gray-500 relative flex-shrink-0 gap-[8px] justify-between p-[8px] rounded-md;
 
   &.size-small {
-    @apply w-[160px] h-[80px] rounded-md shadow-sm p-2;
+    @apply w-[160px] h-[80px] shadow-sm p-[8px];
   }
 
   &.size-medium {
-    @apply w-[240px] h-[120px] rounded-md shadow-md p-3;
+    @apply w-[240px] h-[120px] shadow-md p-[12px];
   }
 
   &.size-large {
-    @apply w-[320px] h-[160px] rounded-lg shadow-lg p-4;
+    @apply w-[320px] h-[160px] shadow-lg p-[16px];
   }
 }
 
@@ -28,38 +28,40 @@ $ROOT: shared.makeRoot('StatCard');
 }
 
 #{el('trend')} {
-  @apply w-[60px] h-full flex justify-center items-end pb-2;
+  @apply w-[60px] h-full flex justify-center items-end pb-[8px];
 
   #{$ROOT}.size-medium & {
-    @apply w-[80px] pb-4;
+    @apply w-[80px] pb-[16px];
   }
 
   #{$ROOT}.size-large & {
-    @apply w-[100px] pb-6;
-  }
-
-  & .icon-positive {
-    @apply text-green-700 stroke-2;
-  }
-
-  & .icon-negative {
-    @apply text-red-700 stroke-2;
+    @apply w-[100px] pb-[24px];
   }
 }
 
 #{el('icon')} {
-  @apply my-2 ml-4;
+  @apply my-[8px] ml-[16px] rounded-md;
 
   #{$ROOT}.size-small & {
-    @apply w-5 h-5 rounded-sm my-1 ml-2;
+    @apply w-[20px] h-[20px] my-[4px] ml-[8px];
   }
 
   #{$ROOT}.size-medium & {
-    @apply w-6 h-6 rounded-md;
+    @apply w-[24px] h-[24px];
   }
 
   #{$ROOT}.size-large & {
-    @apply w-8 h-8 rounded-lg;
+    @apply w-[32px] h-[32px];
+  }
+}
+
+#{el('variant-icon')} {
+  #{$ROOT}.variant-positive & {
+    @apply text-green-700 stroke-2;
+  }
+
+  #{$ROOT}.variant-negative & {
+    @apply text-red-700 stroke-2;
   }
 }
 
@@ -96,19 +98,7 @@ $ROOT: shared.makeRoot('StatCard');
 }
 
 #{el('overlay')} {
-  @apply absolute top-0 left-0 w-full h-full bg-dark-gray-600 transition rounded-sm opacity-0;
-
-  #{$ROOT}.size-small & {
-    @apply rounded-sm;
-  }
-
-  #{$ROOT}.size-medium & {
-    @apply rounded-md;
-  }
-
-  #{$ROOT}.size-large & {
-    @apply rounded-lg;
-  }
+  @apply absolute top-0 left-0 w-full h-full bg-dark-gray-600 transition rounded-md opacity-0;
 
   #{$ROOT}.is-hovered & {
     @apply opacity-30;
@@ -124,5 +114,5 @@ $ROOT: shared.makeRoot('StatCard');
 }
 
 #{el('badge')} {
-  @apply absolute top-[0.5rem] right-[0.5rem] rounded-full;
+  @apply absolute top-[8px] right-[8px] rounded-full;
 }
