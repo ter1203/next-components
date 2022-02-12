@@ -2,33 +2,68 @@
 
 // config 
 
-$ROOT: shared.makeRoot('SidebarItem');
+$ROOT: shared.makeRoot('Sidebar');
 @function el($name) {
   @return shared.makeSubElementName($ROOT, $name);
 }
 
 #{$ROOT} {
+  @apply flex flex-col p-0 pb-[8px] border-r-2 border-gray-500 border-opacity-10;
+  @apply text-gray-900 transition-all duration-500 min-h-full;
+  &.collapsed {
+    &.size-small {
+      width: 44px !important;
+    }
+    &.size-medium {
+      width: 48px !important;
+    }
+    &.size-large {
+      width: 56px !important;
+    }
+  }
+
+  &.size-small {
+    width: 200px;
+  }
+  &.size-medium {
+    width: 240px;
+  }
+  &.size-large {
+    width: 320px;
+  }
+
+  &.dark {
+    @apply bg-cool-gray-800 text-gray-50;
+  }
+}
+
+#{el('logo')} {
+  @apply p-[8px];
 }
 
 #{el('item')} {
-  @apply flex p-[8px] gap-[20px] relative bg-transparent w-full;
+  @apply flex relative bg-transparent p-[12px] w-full;
 
-  &.size-small {
-    @apply p-[6px] gap-[16px];
+  #{$ROOT}.size-small & {
+    @apply gap-[16px];
   }
-
-  &.size-large {
+  #{$ROOT}.size-medium & {
+    @apply p-[12px] gap-[20px];
+  }
+  #{$ROOT}.size-large & {
     @apply p-[12px] gap-[24px];
   }
 }
 
 #{el('item-icon')} {
-  @apply w-[20px] h-[20px];
+  @apply w-[20px] h-[20px] text-gray-600;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
 
   #{$ROOT}.size-medium & {
     @apply w-[24px] h-[24px];
   }
-
   #{$ROOT}.size-large & {
     @apply w-[32px] h-[32px];
   }
@@ -38,44 +73,67 @@ $ROOT: shared.makeRoot('SidebarItem');
   @apply line-clamp-1;
 
   #{$ROOT}.size-small & {
-    @apply text-[14px] leading-5;
+    @apply text-[14px] leading-[20px];
   }
 
   #{$ROOT}.size-medium & {
-    @apply text-[16px] leading-6;
+    @apply text-[16px] leading-[24px];
   }
 
   #{$ROOT}.size-large & {
-    @apply text-[20px] leading-8;
+    @apply text-[20px] leading-[32px];
   }
 }
 
 #{el('item-badge')} {
-  @apply absolute rounded-full bg-purple-600 text-white;
+  @apply absolute rounded-md bg-purple-100 text-purple-600 transition-all duration-500 text-[12px] w-[20px] h-[20px];
+
+  #{$ROOT}.size-small &, #{$ROOT}.size-medium &, #{$ROOT}.size-large & {
+    @apply text-[12px] w-[20px] h-[20px] right-[12px];
+  }
+
+  #{$ROOT}.dark & {
+    @apply bg-purple-600 text-purple-50;
+  }
 
   #{$ROOT}.size-small & {
-    @apply right-[6px] top-[6px] text-[12px] w-[20px] h-[20px];
+    @apply top-[12px];
   }
 
   #{$ROOT}.size-medium & {
-    @apply right-[10px] top-[10px] text-[14px] w-[20px] h-[20px];
+    @apply top-[14px];
   }
 
   #{$ROOT}.size-large & {
-    @apply right-[16px] top-[16px] text-[16px] w-[24px] h-[24px];
+    @apply top-[24px];
+  }
+
+  #{$ROOT}.collapsed & {
+    @apply rounded-full bg-purple-600 text-purple-50 text-[10px] w-[18px] h-[18px];
+  }
+  #{$ROOT}.collapsed.size-small & {
+    @apply right-[4px] top-[4px];
+  }
+  #{$ROOT}.collapsed.size-medium & {
+    @apply right-[8px] top-[8px];
+  }
+  #{$ROOT}.collapsed.size-large & {
+    @apply right-[8px] top-[12px];
   }
 }
 
 #{el('overlay')} {
   @apply absolute top-0 left-0 w-full h-full bg-dark-gray-50 transition opacity-0;
 
-  #{$ROOT}.is-hovered & {
+  #{el('item')}.is-hovered & {
     @apply opacity-10;
   }
 
-  #{$ROOT}.is-pressed & {
-    @apply opacity-20;
+  #{el('item')}.is-pressed & {
+    @apply opacity-30;
   }
 }
 
-
+#{el('item-padder')} {
+  @apply flex-grow;
+}

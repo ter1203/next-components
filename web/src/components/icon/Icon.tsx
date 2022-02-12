@@ -53,6 +53,7 @@ function IconComponent(
       ref={domRef}
       className={clsx(`${ROOT} size-${p.size}`, p.className)}
       viewBox={`0 0 ${p.viewBoxWidth} ${p.viewBoxHeight}`}
+      fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
       {typeof p.content === 'string' ? (

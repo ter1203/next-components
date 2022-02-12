@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import React, { ReactElement, ForwardedRef } from 'react';
+import React, { ReactElement, ForwardedRef, forwardRef } from 'react';
 import { useButton } from '@react-aria/button';
 import { useFocusRing } from '@react-aria/focus';
 import { useHover } from '@react-aria/interactions';
@@ -35,10 +35,10 @@ export type SidebarItemProps = StyleProps &
   icon: IconData | ReactElement;
 
   /**
-   * Item size
-   * @default "medium"
+   * Icon viewport size
+   * @default 24
    */
-  size?: 'small' | 'medium' | 'large';
+  iconViewport?: number;
 
   /**
    * Active flag
@@ -67,16 +67,16 @@ export type SidebarItemProps = StyleProps &
   onPress?: ButtonProps['onPress'];
 };
 
-const ROOT = makeRootClassName('SidebarItem');
+const ROOT = makeRootClassName('Sidebar');
 const el = makeElementClassNameFactory(ROOT);
 
 const DEFAULT_PROPS = {
-  size: 'medium',
+  iconViewport: 24,
   active: false,
   badge: '',
 } as const;
 
-function SidebarItem(
+function SidebarItemComponent(
   props: SidebarItemProps,
   ref: ForwardedRef<HTMLElement>
 ): ReactElement { 
@@ -99,7 +99,7 @@ function SidebarItem(
       <div
         {...itemProps}
         className={clsx(
-          `${ROOT} ${el`item`} size-${p.size}`,
+          el`item`,
           {
             'is-hovered': isHovered,
             'is-pressed': isPressed,
@@ -112,8 +112,8 @@ function SidebarItem(
         <Icon
           content={p.icon}
           className={el`item-icon`}
-          viewBoxWidth={24}
-          viewBoxHeight={24}
+          viewBoxWidth={p.iconViewport}
+          viewBoxHeight={p.iconViewport}
         />
         <Text className={el`item-label`}>
           {p.label}
@@ -124,5 +124,13 @@ function SidebarItem(
     </OptionalTooltip>
   ); 
 };
+
+export const SidebarPadding = () => {
+  return (
+    <div className={el`item-padder`} />
+  )
+}
+
+const SidebarItem = forwardRef<HTMLElement, SidebarItemProps>(SidebarItemComponent);
 
 export default SidebarItem;
