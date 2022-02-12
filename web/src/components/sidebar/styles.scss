@@ -8,17 +8,17 @@ $ROOT: shared.makeRoot('Sidebar');
 }
 
 #{$ROOT} {
-  @apply flex flex-col p-0 pb-[8px] border-r-2 border-gray-500 border-opacity-10;
+  @apply flex flex-col p-0 py-[8px] border-r-2 border-gray-500 border-opacity-10;
   @apply text-gray-900 transition-all duration-500 min-h-full;
   &.collapsed {
     &.size-small {
-      width: 44px !important;
+      width: 56px !important;
     }
     &.size-medium {
-      width: 48px !important;
+      width: 64px !important;
     }
     &.size-large {
-      width: 56px !important;
+      width: 80px !important;
     }
   }
 
@@ -42,16 +42,16 @@ $ROOT: shared.makeRoot('Sidebar');
 }
 
 #{el('item')} {
-  @apply flex relative bg-transparent p-[12px] w-full;
+  @apply flex relative bg-transparent py-[16px] w-full;
 
   #{$ROOT}.size-small & {
-    @apply gap-[16px];
+    @apply px-[16px] gap-[16px];
   }
   #{$ROOT}.size-medium & {
-    @apply p-[12px] gap-[20px];
+    @apply px-[20px] gap-[20px];
   }
   #{$ROOT}.size-large & {
-    @apply p-[12px] gap-[24px];
+    @apply px-[24px] gap-[24px];
   }
 }
 
@@ -89,7 +89,7 @@ $ROOT: shared.makeRoot('Sidebar');
   @apply absolute rounded-md bg-purple-100 text-purple-600 transition-all duration-500 text-[12px] w-[20px] h-[20px];
 
   #{$ROOT}.size-small &, #{$ROOT}.size-medium &, #{$ROOT}.size-large & {
-    @apply text-[12px] w-[20px] h-[20px] right-[12px];
+    @apply text-[12px] w-[20px] h-[20px] right-[16px];
   }
 
   #{$ROOT}.dark & {
@@ -97,28 +97,28 @@ $ROOT: shared.makeRoot('Sidebar');
   }
 
   #{$ROOT}.size-small & {
-    @apply top-[12px];
+    @apply top-[16px];
   }
 
   #{$ROOT}.size-medium & {
-    @apply top-[14px];
+    @apply top-[18px];
   }
 
   #{$ROOT}.size-large & {
-    @apply top-[24px];
+    @apply top-[22px];
   }
 
   #{$ROOT}.collapsed & {
     @apply rounded-full bg-purple-600 text-purple-50 text-[10px] w-[18px] h-[18px];
   }
   #{$ROOT}.collapsed.size-small & {
-    @apply right-[4px] top-[4px];
-  }
-  #{$ROOT}.collapsed.size-medium & {
     @apply right-[8px] top-[8px];
   }
+  #{$ROOT}.collapsed.size-medium & {
+    @apply right-[10px] top-[10px];
+  }
   #{$ROOT}.collapsed.size-large & {
-    @apply right-[8px] top-[12px];
+    @apply right-[12px] top-[12px];
   }
 }
 

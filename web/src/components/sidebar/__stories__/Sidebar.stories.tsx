@@ -57,7 +57,7 @@ const PlaygroundTemplate: Story<SidebarProps> = (props: SidebarProps) => {
           />
         </div>
       </div>
-      <div className="flex w-[800px] h-[600px] bg-white overflow-y-auto">
+      <div className="flex w-[800px] h-[800px] bg-white overflow-y-auto">
         <Sidebar {...realProps} className='w-[320px]'>
           <SidebarItem icon={createHome} label='Home' onPress={action('press')} />
           <SidebarItem icon={iconReport} label='Reports' onPress={action('press')} />
@@ -80,10 +80,81 @@ export const Playground = PlaygroundTemplate.bind({});
 Playground.args = {
   logo: <Icon
     content={iconSupport}
-    className='text-purple-600 !w-8 !h-8'
+    className='text-purple-600 !w-8 !h-8 mx-2'
     viewBoxHeight={24}
     viewBoxWidth={24}
   />
 };
 enableAddons(Playground, ['controls', 'actions', 'a11y', 'backgrounds']);
 
+const ItemTemplate: Story<SidebarItemProps> = () => {
+  return (
+    <div>
+      <div className='create-Sidebar size-small'>
+        <SidebarItem icon={createHome} label='Small item without badge' />
+      </div>
+
+      <div className='create-Sidebar size-medium'>
+        <SidebarItem icon={createHome} label='Medium item without badge' />
+      </div>
+
+      <div className='create-Sidebar size-large'>
+        <SidebarItem icon={createHome} label='Large item without badge' />
+      </div>
+
+      <div className='create-Sidebar size-small'>
+        <SidebarItem icon={createHome} label='Small item with badge' badge='3' />
+      </div>
+
+      <div className='create-Sidebar size-medium'>
+        <SidebarItem icon={createHome} label='Medium item with badge' badge='6' />
+      </div>
+
+      <div className='create-Sidebar size-large'>
+        <SidebarItem icon={createHome} label='Large item with badge' badge='11' />
+      </div>
+
+      <div className='create-Sidebar size-small dark'>
+        <SidebarItem icon={createHome} label='Small item in dark' badge='3' />
+      </div>
+
+      <div className='create-Sidebar size-medium dark'>
+        <SidebarItem icon={createHome} label='Medium item in dark' badge='6' />
+      </div>
+
+      <div className='create-Sidebar size-large dark'>
+        <SidebarItem icon={createHome} label='Large item in dark' badge='11' />
+      </div>
+
+      <div className='create-Sidebar size-small collapsed'>
+        <SidebarItem icon={createHome} label='Small item collapsed' badge='3' />
+      </div>
+
+      <div className='create-Sidebar size-medium collapsed'>
+        <SidebarItem icon={createHome} label='Medium item collapsed' badge='6' />
+      </div>
+
+      <div className='create-Sidebar size-large collapsed'>
+        <SidebarItem icon={createHome} label='Large item collapsed' badge='11' />
+      </div>
+
+      <div className='create-Sidebar size-small'>
+        <SidebarItem icon={createHome} label='Small item with badge' badge='3' onPress={action('press')} />
+      </div>
+
+      <div className='create-Sidebar size-medium'>
+        <SidebarItem icon={createHome} label='Medium item with badge' badge='6' onPress={action('press')} />
+      </div>
+
+      <div className='create-Sidebar size-large'>
+        <SidebarItem icon={createHome} label='Large item with badge' badge='11' onPress={action('press')} />
+      </div>
+    </div>
+  )
+}
+
+export const ItemExample = ItemTemplate.bind({})
+ItemExample.args = {
+  icon: createHome,
+  label: 'Hello world'
+}
