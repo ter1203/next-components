@@ -86,7 +86,6 @@ module.exports = {
     800: '#c9ccce',
     900: '#b4b6b7',
   },
-  'cool-gray': colors.coolGray,
   gray: {
     50: '#cad0d4',
     100: '#afb8bf',

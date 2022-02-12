@@ -27,24 +27,24 @@ export type SidebarItemProps = StyleProps &
   /**
    * Item label next to the icon
    */
-  label: string | ReactElement;
+  label: string;
 
   /**
    * Item icon
    */
-  icon: IconData | ReactElement;
+  icon: IconData;
 
   /**
    * Icon viewport size
-   * @default 24
+   * @default 20
    */
   iconViewport?: number;
 
   /**
-   * Active flag
+   * Whether to show selected styles for this item.
    * @default false
    */
-  active?: boolean;
+  isSelected?: boolean;
 
   /**
    * Badge
@@ -71,8 +71,8 @@ const ROOT = makeRootClassName('Sidebar');
 const el = makeElementClassNameFactory(ROOT);
 
 const DEFAULT_PROPS = {
-  iconViewport: 24,
-  active: false,
+  iconViewport: 20,
+  isSelected: false,
   badge: '',
 } as const;
 
@@ -104,7 +104,7 @@ function SidebarItemComponent(
             'is-hovered': isHovered,
             'is-pressed': isPressed,
             'is-focus-visible': isFocusVisible,
-            'is-active': p.active
+            'is-selected': p.isSelected
           },
           p.className
         )}

@@ -38,38 +38,36 @@ const PlaygroundTemplate: Story<SidebarProps> = (props: SidebarProps) => {
   const [open, setOpen] = useState(true)
 
   useEffect(() => {
-    setOpen(!props.collapsed)
-  }, [props.collapsed])
+    setOpen(!props.isCollapsed)
+  }, [props.isCollapsed])
 
   const realProps = {
     ...props,
-    collapsed: !open
+    isCollapsed: !open
   }
   return (
-    <div className='flex flex-col bg-cool-gray-800'>
+    <div className='flex flex-col bg-dark-gray-600'>
       <div className='flex p-2 h-14'>
         <div className='!w-10 !h-10 p-2 cursor-pointer' onClick={() => setOpen(open => !open)}>
           <Icon
             content={createMenu}
             className='text-gray-50 !w-6 !h-6'
-            viewBoxHeight={20}
-            viewBoxWidth={20}
           />
         </div>
       </div>
       <div className="flex w-[800px] h-[800px] bg-white overflow-y-auto">
         <Sidebar {...realProps} className='w-[320px]'>
-          <SidebarItem icon={createHome} label='Home' onPress={action('press')} />
-          <SidebarItem icon={iconReport} label='Reports' onPress={action('press')} />
-          <SidebarItem icon={iconLibrary} label='Library' onPress={action('press')} />
-          <SidebarItem icon={iconCalendar} label='Calendar' onPress={action('press')} />
-          <SidebarItem icon={iconBolt} label='Integrations' onPress={action('press')} />
-          <SidebarItem icon={iconDocument} label='Documents' onPress={action('press')} />
+          <SidebarItem icon={createHome} iconViewport={24} label='Home' onPress={action('press')} />
+          <SidebarItem icon={iconReport} iconViewport={24} label='Reports' onPress={action('press')} />
+          <SidebarItem icon={iconLibrary} iconViewport={24} label='Library' onPress={action('press')} />
+          <SidebarItem icon={iconCalendar} iconViewport={24} label='Calendar' onPress={action('press')} />
+          <SidebarItem icon={iconBolt} iconViewport={24} label='Integrations' onPress={action('press')} />
+          <SidebarItem icon={iconDocument} iconViewport={24} label='Documents' onPress={action('press')} />
           <SidebarPadding />
-          <SidebarItem icon={iconMail} label='Messages' onPress={action('press')} badge='3' />
-          <SidebarItem icon={iconBell} label='Notifications' onPress={action('press')} badge='6' />
-          <SidebarItem icon={svgSetting} label='Settings' onPress={action('press')} />
-          <SidebarItem icon={iconUser} label='Profile' onPress={action('press')} />
+          <SidebarItem icon={iconMail} iconViewport={24} label='Messages' onPress={action('press')} badge='3' />
+          <SidebarItem icon={iconBell} iconViewport={24} label='Notifications' onPress={action('press')} badge='6' />
+          <SidebarItem icon={svgSetting} iconViewport={24} label='Settings' onPress={action('press')} />
+          <SidebarItem icon={iconUser} iconViewport={24} label='Profile' onPress={action('press')} />
         </Sidebar>
       </div>
     </div>
@@ -114,27 +112,27 @@ const ItemTemplate: Story<SidebarItemProps> = () => {
         <SidebarItem icon={createHome} label='Large item with badge' badge='11' />
       </div>
 
-      <div className='create-Sidebar size-small dark'>
+      <div className='create-Sidebar size-small is-dark'>
         <SidebarItem icon={createHome} label='Small item in dark' badge='3' />
       </div>
 
-      <div className='create-Sidebar size-medium dark'>
+      <div className='create-Sidebar size-medium is-dark'>
         <SidebarItem icon={createHome} label='Medium item in dark' badge='6' />
       </div>
 
-      <div className='create-Sidebar size-large dark'>
+      <div className='create-Sidebar size-large is-dark'>
         <SidebarItem icon={createHome} label='Large item in dark' badge='11' />
       </div>
 
-      <div className='create-Sidebar size-small collapsed'>
+      <div className='create-Sidebar size-small is-collapsed'>
         <SidebarItem icon={createHome} label='Small item collapsed' badge='3' />
       </div>
 
-      <div className='create-Sidebar size-medium collapsed'>
+      <div className='create-Sidebar size-medium is-collapsed'>
         <SidebarItem icon={createHome} label='Medium item collapsed' badge='6' />
       </div>
 
-      <div className='create-Sidebar size-large collapsed'>
+      <div className='create-Sidebar size-large is-collapsed'>
         <SidebarItem icon={createHome} label='Large item collapsed' badge='11' />
       </div>
 

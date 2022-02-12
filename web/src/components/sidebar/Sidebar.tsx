@@ -22,13 +22,13 @@ export type SidebarProps = PropsWithChildren<StyleProps> & {
    * Collapsed flag
    * @default false
    */
-  collapsed?: boolean;
+  isCollapsed?: boolean;
 
   /**
    * Dark mode
    * @default: false
    */
-  dark?: boolean;
+  isDarkMode?: boolean;
 };
 
 const ROOT = makeRootClassName('Sidebar');
@@ -36,8 +36,8 @@ const el = makeElementClassNameFactory(ROOT);
 
 const DEFAULT_PROPS = {
   size: 'medium',
-  collapsed: false,
-  dark: false,
+  isCollapsed: false,
+  isDarkMode: false,
 } as const;
 
 function Sidebar(props: SidebarProps): ReactElement { 
@@ -47,7 +47,7 @@ function Sidebar(props: SidebarProps): ReactElement {
     <aside
       className={clsx(
         `${ROOT} size-${p.size}`,
-        { 'dark': p.dark, 'collapsed': p.collapsed },
+        { 'is-dark': p.isDarkMode, 'is-collapsed': p.isCollapsed },
         p.className)
       }
     >

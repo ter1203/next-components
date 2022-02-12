@@ -10,7 +10,7 @@ $ROOT: shared.makeRoot('Sidebar');
 #{$ROOT} {
   @apply flex flex-col p-0 py-[8px] border-r-2 border-gray-500 border-opacity-10;
   @apply text-gray-900 transition-all duration-500 min-h-full;
-  &.collapsed {
+  &.is-collapsed {
     &.size-small {
       width: 56px !important;
     }
@@ -32,8 +32,8 @@ $ROOT: shared.makeRoot('Sidebar');
     width: 320px;
   }
 
-  &.dark {
-    @apply bg-cool-gray-800 text-gray-50;
+  &.is-dark {
+    @apply bg-dark-gray-600 text-gray-50;
   }
 }
 
@@ -92,7 +92,7 @@ $ROOT: shared.makeRoot('Sidebar');
     @apply text-[12px] w-[20px] h-[20px] right-[16px];
   }
 
-  #{$ROOT}.dark & {
+  #{$ROOT}.is-dark & {
     @apply bg-purple-600 text-purple-50;
   }
 
@@ -108,16 +108,16 @@ $ROOT: shared.makeRoot('Sidebar');
     @apply top-[22px];
   }
 
-  #{$ROOT}.collapsed & {
+  #{$ROOT}.is-collapsed & {
     @apply rounded-full bg-purple-600 text-purple-50 text-[10px] w-[18px] h-[18px];
   }
-  #{$ROOT}.collapsed.size-small & {
+  #{$ROOT}.is-collapsed.size-small & {
     @apply right-[8px] top-[8px];
   }
-  #{$ROOT}.collapsed.size-medium & {
+  #{$ROOT}.is-collapsed.size-medium & {
     @apply right-[10px] top-[10px];
   }
-  #{$ROOT}.collapsed.size-large & {
+  #{$ROOT}.is-collapsed.size-large & {
     @apply right-[12px] top-[12px];
   }
 }
