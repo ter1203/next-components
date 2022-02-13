@@ -90,14 +90,14 @@ function SidebarItemComponent(
   const { hoverProps, isHovered } = useHover({});
   const { focusProps, isFocusVisible } = useFocusRing();
 
-  const itemProps = isInteractive ? mergeProps(
+  const behaviorProps = isInteractive ? mergeProps(
     buttonProps, hoverProps, focusProps, tooltipForwardProps
   ) : tooltipForwardProps;
 
   return (
     <OptionalTooltip {...tooltipProps} content={p.tooltip} isInstant>
       <div
-        {...itemProps}
+        {...behaviorProps}
         className={clsx(
           el`item`,
           {
