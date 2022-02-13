@@ -35,10 +35,10 @@ export type SidebarItemProps = StyleProps &
   icon: IconData;
 
   /**
-   * Icon viewport size
+   * Icon viewbox size
    * @default 20
    */
-  iconViewport?: number;
+  iconViewbox?: number;
 
   /**
    * Whether to show selected styles for this item.
@@ -71,7 +71,7 @@ const ROOT = makeRootClassName('Sidebar');
 const el = makeElementClassNameFactory(ROOT);
 
 const DEFAULT_PROPS = {
-  iconViewport: 20,
+  iconViewbox: 20,
   isSelected: false,
   badge: '',
 } as const;
@@ -112,8 +112,8 @@ function SidebarItemComponent(
         <Icon
           content={p.icon}
           className={el`item-icon`}
-          viewBoxWidth={p.iconViewport}
-          viewBoxHeight={p.iconViewport}
+          viewBoxWidth={p.iconViewbox}
+          viewBoxHeight={p.iconViewbox}
         />
         <Text className={el`item-label`}>
           {p.label}

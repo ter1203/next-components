@@ -57,17 +57,17 @@ const PlaygroundTemplate: Story<SidebarProps> = (props: SidebarProps) => {
       </div>
       <div className="flex w-[800px] h-[800px] bg-white overflow-y-auto">
         <Sidebar {...realProps} className='w-[320px]'>
-          <SidebarItem icon={createHome} iconViewport={24} label='Home' onPress={action('press')} />
-          <SidebarItem icon={iconReport} iconViewport={24} label='Reports' onPress={action('press')} />
-          <SidebarItem icon={iconLibrary} iconViewport={24} label='Library' onPress={action('press')} />
-          <SidebarItem icon={iconCalendar} iconViewport={24} label='Calendar' onPress={action('press')} />
-          <SidebarItem icon={iconBolt} iconViewport={24} label='Integrations' onPress={action('press')} />
-          <SidebarItem icon={iconDocument} iconViewport={24} label='Documents' onPress={action('press')} />
+          <SidebarItem icon={createHome} iconViewbox={24} label='Home' onPress={action('press')} />
+          <SidebarItem icon={iconReport} iconViewbox={24} label='Reports' onPress={action('press')} />
+          <SidebarItem icon={iconLibrary} iconViewbox={24} label='Library' onPress={action('press')} />
+          <SidebarItem icon={iconCalendar} iconViewbox={24} label='Calendar' onPress={action('press')} />
+          <SidebarItem icon={iconBolt} iconViewbox={24} label='Integrations' onPress={action('press')} />
+          <SidebarItem icon={iconDocument} iconViewbox={24} label='Documents' onPress={action('press')} />
           <SidebarPadding />
-          <SidebarItem icon={iconMail} iconViewport={24} label='Messages' onPress={action('press')} badge='3' />
-          <SidebarItem icon={iconBell} iconViewport={24} label='Notifications' onPress={action('press')} badge='6' />
-          <SidebarItem icon={svgSetting} iconViewport={24} label='Settings' onPress={action('press')} />
-          <SidebarItem icon={iconUser} iconViewport={24} label='Profile' onPress={action('press')} />
+          <SidebarItem icon={iconMail} iconViewbox={24} label='Messages' onPress={action('press')} badge='3' />
+          <SidebarItem icon={iconBell} iconViewbox={24} label='Notifications' onPress={action('press')} badge='6' />
+          <SidebarItem icon={svgSetting} iconViewbox={24} label='Settings' onPress={action('press')} />
+          <SidebarItem icon={iconUser} iconViewbox={24} label='Profile' onPress={action('press')} />
         </Sidebar>
       </div>
     </div>
