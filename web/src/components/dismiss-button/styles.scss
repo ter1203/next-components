@@ -1,0 +1,36 @@
+@use '../../utils/shared';
+
+// config 
+
+$ROOT: shared.makeRoot('DismissButton');
+@function el($name) {
+  @return shared.makeSubElementName($ROOT, $name);
+}
+
+#{$ROOT} {
+  @apply rounded-full text-black opacity-80 bg-transparent outline-none transition-all;
+  transition: all 0.2s cubic-bezier(0.75, -1.27, 0.3, 2.33);
+
+  &.is-hovered {
+    @apply opacity-95;
+  }
+
+  &.is-pressed {
+    @apply scale-90;
+  }
+}
+
+#{el('icon')} {
+  #{$ROOT}.size-xs & {
+    @apply w-[12px] h-[12px];
+  }
+  #{$ROOT}.size-sm & {
+    @apply w-[16px] h-[16px];
+  }
+  #{$ROOT}.size-md & {
+    @apply w-[24px] h-[24px];
+  }
+  #{$ROOT}.size-lg & {
+    @apply w-[32px] h-[32px];
+  }
+}
