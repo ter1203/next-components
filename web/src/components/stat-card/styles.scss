@@ -33,7 +33,7 @@ $ROOT: shared.makeRoot('StatCard');
 }
 
 #{el('trend-end')}, #{el('trend-center')} {
-  @apply flex-shrink-0 w-[48px] h-full flex justify-around items-center;
+  @apply flex-shrink-0 w-[48px] h-full flex justify-end items-center mr-[-4px];
 
   #{$ROOT}.size-medium & {
     @apply w-[64px];
