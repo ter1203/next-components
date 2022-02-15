@@ -116,6 +116,29 @@ function StatCardComponent(
     }
   }, [p.trend]);
 
+  const isBadgeExist = p.variant !== 'default' || !!p.badgeLabel
+  const badge = useMemo(() => {
+    if (isBadgeExist) {
+      return (
+        <Badge variant='primary' className={el`badge`} size='small'>
+          {p.variant !== 'default' && (
+            <Icon
+              content={p.variant === 'positive' ? POSITIVE_VARIANT_ICON : NEGATIVE_VARIANT_ICON}
+              className={el`variant-icon`}
+            />
+          )}
+          {p.badgeLabel}
+        </Badge>
+      )
+    } else {
+      return null;
+    }
+  }, [p.variant, p.badgeLabel])
+
+  const isOnlyTitleBadge = (
+    isBadgeExist && !p.icon && (!p.trend || !p.trend.length) && !p.description
+  );
+
   return (
     <OptionalTooltip {...tooltipProps} content={p.tooltip} isInstant>
       <div
@@ -126,48 +149,53 @@ function StatCardComponent(
             'is-hovered': isHovered,
             'is-pressed': isPressed,
             'is-focus-visible': isFocusVisible,
+            'is-interactive': isInteractive
           },
           p.className
         )}
       >
-        <section className={el`content`}>
-          {!!p.icon && <Icon className={el`icon`} content={p.icon} />}
-          <Text type='h4' className={el`title`}>{p.title}</Text>
-          {!!p.description && (
-            <Text type='body-sm' className={el`desc`}>
-              {p.description}
-            </Text>
-          )}
-        </section>
-
-        {(trends.length > 0 || !!p.variant) && (
-          <section className={el`trend`}>
-            {p.variant !== 'default' && (
-              <Icon
-                content={p.variant === 'positive' ? POSITIVE_VARIANT_ICON : NEGATIVE_VARIANT_ICON}
-                className={el`variant-icon`}
-              />
-            )}
-            {trends.length > 0 && (
-              <ResponsiveContainer width='60%' height='50%'>
-                <LineChart data={trends} width={200} height={160}>
-                  <Line
-                    type="monotone"
-                    dot={false}
-                    dataKey="v"
-                    stroke={TRENDING_STROKE_COLOR}
-                    strokeWidth={2}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
-            )}
+        {isOnlyTitleBadge ? (
+          <section className={el`content`}>
+            <div className={el`title-badge`}>
+              <Text type='h5' className={el`title`}>{p.title}</Text>
+              {badge}
+            </div>
           </section>
-        )}
+        ) : (
+          <>
+            {/* icon, title and description */}
+            <section className={el`content`}>
+              {!!p.icon && <Icon className={el`icon`} content={p.icon} />}
+              <div className={el`title-desc`}>
+                <Text type='h5' className={el`title`}>{p.title}</Text>
+                {!!p.description && (
+                  <Text type='body-sm' className={el`desc`}>
+                    {p.description}
+                  </Text>
+                )}
+              </div>
+            </section>
 
-        {p.badgeLabel && (
-          <span className={el`badge`}>
-            <Badge variant='primary'>{p.badgeLabel}</Badge>
-          </span>
+            {/* trend graph */}
+            {trends.length > 0 && (
+              <section className={isBadgeExist ? el`trend-end` : el`trend-center`}>
+                <ResponsiveContainer width='60%' height='100%'>
+                  <LineChart data={trends} width={200} height={160}>
+                    <Line
+                      type="monotone"
+                      dot={false}
+                      dataKey="v"
+                      stroke={TRENDING_STROKE_COLOR}
+                      strokeWidth={2}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              </section>
+            )}
+
+            {/* badge at the right top corner */}
+            {badge}
+          </>
         )}
 
         {isInteractive && <div className={el`overlay`} />}

@@ -3,4 +3,3 @@ node_modules/
 storybook-static/
 build-storybook.*
 dependencies-*.svg
-package-lock.json

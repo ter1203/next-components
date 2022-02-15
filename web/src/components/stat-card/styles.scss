@@ -8,18 +8,23 @@ $ROOT: shared.makeRoot('StatCard');
 }
 
 #{$ROOT} {
-  @apply flex bg-light-gray-500 relative flex-shrink-0 gap-[8px] justify-between p-[8px] rounded-md;
+  @apply flex bg-white relative flex-shrink-0 gap-[8px] justify-between rounded-md shadow-sm;
+  @apply h-[80px] py-[8px] select-none;
+
+  &.is-interactive {
+    @apply cursor-pointer;
+  }
 
   &.size-small {
-    @apply w-[160px] h-[80px] shadow-sm p-[8px];
+    @apply w-[160px] px-[8px];
   }
 
   &.size-medium {
-    @apply w-[240px] h-[120px] shadow-md p-[12px];
+    @apply w-[240px] px-[12px];
   }
 
   &.size-large {
-    @apply w-[320px] h-[160px] shadow-lg p-[16px];
+    @apply w-[320px] px-[16px];
   }
 }
 
@@ -27,74 +32,44 @@ $ROOT: shared.makeRoot('StatCard');
   @apply flex flex-col justify-around flex-grow;
 }
 
-#{el('trend')} {
-  @apply w-[60px] h-full flex justify-center items-end pb-[8px];
+#{el('trend-end')}, #{el('trend-center')} {
+  @apply flex-shrink-0 w-[48px] h-full flex justify-around items-center;
 
   #{$ROOT}.size-medium & {
-    @apply w-[80px] pb-[16px];
+    @apply w-[64px];
   }
 
   #{$ROOT}.size-large & {
-    @apply w-[100px] pb-[24px];
+    @apply w-[80px];
   }
+}
+
+#{el('trend-end')} {
+  @apply pt-[32px];
+}
+
+#{el('trend-center')} {
+  @apply py-[16px];
 }
 
 #{el('icon')} {
-  @apply my-[8px] ml-[16px] rounded-md;
-
-  #{$ROOT}.size-small & {
-    @apply w-[20px] h-[20px] my-[4px] ml-[8px];
-  }
-
-  #{$ROOT}.size-medium & {
-    @apply w-[24px] h-[24px];
-  }
-
-  #{$ROOT}.size-large & {
-    @apply w-[32px] h-[32px];
-  }
-}
-
-#{el('variant-icon')} {
-  #{$ROOT}.variant-positive & {
-    @apply text-green-700 stroke-2;
-  }
-
-  #{$ROOT}.variant-negative & {
-    @apply text-red-700 stroke-2;
-  }
+  @apply w-[20px] h-[20px] my-[4px] rounded-md;
 }
 
 #{el('title')} {
-  @apply line-clamp-1 font-bold text-body-md;
+  @apply line-clamp-1 opacity-90;
 
-  #{$ROOT}.size-small & {
-    @apply text-body-md;
-  }
-
-  #{$ROOT}.size-medium & {
-    @apply text-body-lg;
-  }
-
-  #{$ROOT}.size-large & {
-    @apply text-2xl;
+  #{$ROOT} & {
+    @apply text-heavy;
   }
 }
 
+#{el('title-badge')} {
+  @apply flex justify-between items-center;
+}
+
 #{el('desc')} {
-  @apply font-normal text-gray-600 line-clamp-1;
-
-  #{$ROOT}.size-small & {
-    @apply text-xs;
-  }
-
-  #{$ROOT}.size-medium & {
-    @apply text-sm;
-  }
-
-  #{$ROOT}.size-large & {
-    @apply text-body-md;
-  }
+  @apply font-normal text-gray-600 line-clamp-1 mt-0;
 }
 
 #{el('overlay')} {
@@ -113,6 +88,28 @@ $ROOT: shared.makeRoot('StatCard');
   }
 }
 
+#{el('variant-icon')} {
+  @apply m-0;
+}
+
 #{el('badge')} {
-  @apply absolute top-[8px] right-[8px] rounded-full;
+
+  @apply absolute top-[8px] right-[8px] rounded-md px-[8px] py-[4px];
+  @apply  stroke-2;
+
+  #{$ROOT}.variant-default & {
+    @apply text-dark bg-light-gray-500;
+  }
+
+  #{$ROOT}.variant-positive & {
+    @apply text-green-700 bg-green-100;
+  }
+
+  #{$ROOT}.variant-negative & {
+    @apply text-red-700 bg-red-100;
+  }
+
+  #{el('title-badge')} & {
+    @apply static;
+  }
 }
