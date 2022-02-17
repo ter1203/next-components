@@ -9,20 +9,19 @@ import type { SidebarItemProps } from '../SidebarItem';
 import SidebarItem, { SidebarSectionSpacer } from '../SidebarItem';
 import { enableAddons } from '@/utils/storybook-shared';
 import {
-  createHome,
+  createAward,
   createMenu,
-  svgSetting,
+  createCalendar,
+  createMail,
+  createBolt,
+  createBell,
+  createPeople,
+  createBlockGrid,
+  createBlockSocial,
+  createBlockText,
+  createBookmark,
+  createCheck
 } from '@/assets/icons';
-const iconCalendar = 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z';
-const iconMail = 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z';
-const iconBolt = 'M13 10V3L4 14h7v7l9-11h-7z';
-const iconBell = 'M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9';
-const iconReport = 'M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z';
-const iconLibrary = 'M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z';
-const iconSupport = 'M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z';
-const iconDocument = 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z';
-const iconUser = 'M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z';
-
 
 export default {
   title: 'Components/Sidebar',
@@ -34,7 +33,7 @@ export default {
 const Logo = (): ReactElement => (
   <Icon
     size='custom'
-    content={iconSupport}
+    content={createBlockSocial}
     className='text-purple-600 w-8 h-8 mx-2'
     viewBoxHeight={24}
     viewBoxWidth={24}
@@ -49,11 +48,6 @@ const PlaygroundTemplate: Story<SidebarProps> = (props: SidebarProps) => {
     setOpen(!props.isCollapsed)
   }, [props.isCollapsed])
 
-  const defaultProps = {
-    _iconViewbox: 24,
-    onPress: action('press')
-  }
-
   return (
     <div className='flex flex-col bg-dark-gray-600'>
       <div className='flex p-2 h-14'>
@@ -66,35 +60,35 @@ const PlaygroundTemplate: Story<SidebarProps> = (props: SidebarProps) => {
       </div>
       <div className="flex w-[800px] h-[800px] bg-white overflow-y-auto">
         <Sidebar {...props} isCollapsed={!open} className='w-[320px]'>
-          <SidebarItem icon={createHome} {...defaultProps}>
+          <SidebarItem icon={createAward} onPress={action('press')}>
             Home
           </SidebarItem>
-          <SidebarItem icon={iconReport} {...defaultProps}>
+          <SidebarItem icon={createBookmark} onPress={action('press')}>
             Reports
           </SidebarItem>
-          <SidebarItem icon={iconLibrary} {...defaultProps}>
+          <SidebarItem icon={createBlockText} onPress={action('press')}>
             Library
           </SidebarItem>
-          <SidebarItem icon={iconCalendar} {...defaultProps}>
+          <SidebarItem icon={createCalendar} onPress={action('press')}>
             Calendar
           </SidebarItem>
-          <SidebarItem icon={iconBolt} {...defaultProps}>
+          <SidebarItem icon={createBolt} onPress={action('press')}>
             Integrations
           </SidebarItem>
-          <SidebarItem icon={iconDocument} {...defaultProps}>
+          <SidebarItem icon={createBlockGrid} onPress={action('press')}>
             Documents
           </SidebarItem>
           <SidebarSectionSpacer />
-          <SidebarItem icon={iconMail} {...defaultProps} badge='3'>
+          <SidebarItem icon={createMail} onPress={action('press')} badge='3'>
             Messages
           </SidebarItem>
-          <SidebarItem icon={iconBell} {...defaultProps} badge='6'>
+          <SidebarItem icon={createBell} onPress={action('press')} badge='6'>
             Notifications
           </SidebarItem>
-          <SidebarItem icon={svgSetting} {...defaultProps}>
+          <SidebarItem icon={createCheck} onPress={action('press')}>
             Settings
           </SidebarItem>
-          <SidebarItem icon={iconUser} {...defaultProps}>
+          <SidebarItem icon={createPeople} onPress={action('press')}>
             Profile
           </SidebarItem>
         </Sidebar>
@@ -112,16 +106,16 @@ enableAddons(Playground, ['controls', 'actions', 'a11y', 'backgrounds']);
 const SidebarItemVariant = (): ReactElement => {
   return (
     <>
-      <SidebarItem icon={createHome} _iconViewbox={24}>
+      <SidebarItem icon={createAward} _iconViewbox={24}>
         Item without badge
       </SidebarItem>
-      <SidebarItem icon={createHome} _iconViewbox={24} badge='6'>
+      <SidebarItem icon={createAward} _iconViewbox={24} badge='6'>
         Item with badge
       </SidebarItem>
-      <SidebarItem icon={createHome} _iconViewbox={24} badge='11' onPress={action('press')}>
+      <SidebarItem icon={createAward} _iconViewbox={24} badge='11' onPress={action('press')}>
         Interactive item
       </SidebarItem>
-      <SidebarItem icon={createHome} _iconViewbox={24} onPress={action('press')} isSelected>
+      <SidebarItem icon={createAward} _iconViewbox={24} onPress={action('press')} isSelected>
         Selected item
       </SidebarItem>
     </>
@@ -161,7 +155,7 @@ const ItemTemplate: Story<SidebarItemProps> = () => {
 
 export const ItemExample = ItemTemplate.bind({})
 ItemExample.args = {
-  icon: createHome
+  icon: createAward
 }
 
 const SidebarSpacerVariant = (
@@ -175,17 +169,17 @@ const SidebarSpacerVariant = (
   return (
     <>
       <Sidebar logo={<Logo />} isCollapsed={collapsed}>
-        <SidebarItem icon={createHome} {...defaultProps}>
+        <SidebarItem icon={createAward} {...defaultProps}>
           Home
         </SidebarItem>
-        <SidebarItem icon={iconReport} {...defaultProps}>
+        <SidebarItem icon={createBookmark} {...defaultProps}>
           Reports
         </SidebarItem>
         {spacer && <SidebarSectionSpacer />}
-        <SidebarItem icon={iconMail} {...defaultProps} badge='3'>
+        <SidebarItem icon={createMail} {...defaultProps} badge='3'>
           Messages
         </SidebarItem>
-        <SidebarItem icon={iconUser} {...defaultProps}>
+        <SidebarItem icon={createPeople} {...defaultProps}>
           Profile
         </SidebarItem>
       </Sidebar>

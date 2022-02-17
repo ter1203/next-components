@@ -76,9 +76,6 @@ $ROOT: shared.makeRoot('Sidebar');
 
 #{el('item-icon')} {
   @apply w-[16px] h-[16px] text-gray-600;
-  stroke: currentColor;
-  fill: none;
-  stroke-width: 2;
 
   #{$ROOT}.size-medium & {
     @apply w-[24px] h-[24px];
