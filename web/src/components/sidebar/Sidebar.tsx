@@ -8,9 +8,9 @@ import {
 
 export type SidebarProps = PropsWithChildren<StyleProps> & {
   /**
-   * Logo image
+   * Logo component
    */
-  logo: ReactElement;
+  logo?: ReactElement;
 
   /**
    * Sidebar size
@@ -19,13 +19,13 @@ export type SidebarProps = PropsWithChildren<StyleProps> & {
   size?: 'small' | 'medium' | 'large';
 
   /**
-   * Collapsed flag
+   * Whether the sidebar has collapsed visual style (icon only for items)
    * @default false
    */
   isCollapsed?: boolean;
 
   /**
-   * Dark mode
+   * Whether the sidebar should display in dark mode
    * @default: false
    */
   isDarkMode?: boolean;
@@ -51,7 +51,7 @@ function Sidebar(props: SidebarProps): ReactElement {
         p.className)
       }
     >
-      <div className={el`logo`}>{p.logo}</div>
+      {p.logo && <div className={el`logo`}>{p.logo}</div>}
       {p.children}
     </aside>
   );

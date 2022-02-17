@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import React, { ReactElement, ForwardedRef, forwardRef } from 'react';
+import React, { ReactElement, ForwardedRef, forwardRef, PropsWithChildren } from 'react';
 import { useButton } from '@react-aria/button';
 import { useFocusRing } from '@react-aria/focus';
 import { useHover } from '@react-aria/interactions';
@@ -21,14 +21,9 @@ import { OptionalTooltip } from '../tooltip/Tooltip';
 import Text from '../text/Text'
 
 
-export type SidebarItemProps = StyleProps & 
+export type SidebarItemProps = PropsWithChildren<StyleProps> & 
   Pick<TooltipComponentProps, 'tooltipSide'> &
   Omit<TooltipForwardProps, 'onKeyDown' | 'onBlur'> & {
-  /**
-   * Item label next to the icon
-   */
-  label: string;
-
   /**
    * Item icon
    */
@@ -38,7 +33,7 @@ export type SidebarItemProps = StyleProps &
    * Icon viewbox size
    * @default 20
    */
-  iconViewbox?: number;
+  _iconViewbox?: number;
 
   /**
    * Whether to show selected styles for this item.
@@ -47,7 +42,7 @@ export type SidebarItemProps = StyleProps &
   isSelected?: boolean;
 
   /**
-   * Badge
+   * The label for a badge on the item
    */
   badge?: string;
 
@@ -71,7 +66,7 @@ const ROOT = makeRootClassName('Sidebar');
 const el = makeElementClassNameFactory(ROOT);
 
 const DEFAULT_PROPS = {
-  iconViewbox: 20,
+  _iconViewbox: 20,
   isSelected: false,
   badge: '',
 } as const;
@@ -104,32 +99,30 @@ function SidebarItemComponent(
             'is-hovered': isHovered,
             'is-pressed': isPressed,
             'is-focus-visible': isFocusVisible,
-            'is-selected': p.isSelected
+            'is-selected': p.isSelected,
+            'is-interactive': isInteractive
           },
           p.className
         )}
       >
         <Icon
           content={p.icon}
+          size='custom'
           className={el`item-icon`}
-          viewBoxWidth={p.iconViewbox}
-          viewBoxHeight={p.iconViewbox}
+          viewBoxWidth={p._iconViewbox}
+          viewBoxHeight={p._iconViewbox}
         />
         <Text className={el`item-label`}>
-          {p.label}
+          {p.children}
         </Text>
-        {!!p.badge && <Badge variant='primary' isOutline className={el`item-badge`}>{p.badge}</Badge>}
+        {p.badge && <Badge variant='primary' isOutline className={el`item-badge`}>{p.badge}</Badge>}
         {isInteractive && <div className={el`overlay`} />}
       </div>
     </OptionalTooltip>
   ); 
 };
 
-export const SidebarPadding = () => {
-  return (
-    <div className={el`item-padder`} />
-  )
-}
+export const SidebarSectionSpacer = () => <div className={el`item-padder`} />
 
 const SidebarItem = forwardRef<HTMLElement, SidebarItemProps>(SidebarItemComponent);
 

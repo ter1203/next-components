@@ -9,27 +9,28 @@ $ROOT: shared.makeRoot('Sidebar');
 
 #{$ROOT} {
   @apply flex flex-col p-0 py-[8px] border-r-2 border-gray-500 border-opacity-10;
-  @apply text-gray-900 transition-all duration-500 min-h-full;
-  &.is-collapsed {
-    &.size-small {
-      width: 56px !important;
-    }
-    &.size-medium {
-      width: 64px !important;
-    }
-    &.size-large {
-      width: 80px !important;
-    }
-  }
+  @apply transition-all duration-500 min-h-full;
 
   &.size-small {
-    width: 200px;
+    @apply w-[256px];
+
+    &.is-collapsed {
+      @apply w-[48px];
+    }
   }
   &.size-medium {
-    width: 240px;
+    @apply w-[320px];
+
+    &.is-collapsed {
+      @apply w-[64px];
+    }
   }
   &.size-large {
-    width: 320px;
+    @apply w-[384px];
+
+    &.is-collapsed {
+      @apply w-[96px];
+    }
   }
 
   &.is-dark {
@@ -42,7 +43,7 @@ $ROOT: shared.makeRoot('Sidebar');
 }
 
 #{el('item')} {
-  @apply flex relative bg-transparent py-[16px] w-full;
+  @apply flex relative bg-transparent py-[16px] w-full text-gray-900 transition-all select-none;
 
   #{$ROOT}.size-small & {
     @apply px-[16px] gap-[16px];
@@ -51,12 +52,30 @@ $ROOT: shared.makeRoot('Sidebar');
     @apply px-[20px] gap-[20px];
   }
   #{$ROOT}.size-large & {
-    @apply px-[24px] gap-[24px];
+    @apply px-[32px] gap-[32px];
+  }
+
+  &.is-hovered {
+    @apply bg-gray-50;
+    
+    #{$ROOT}.is-dark & {
+      @apply bg-dark-gray-800;
+    }
+  }
+  &.is-pressed {
+    @apply bg-gray-100;
+
+    #{$ROOT}.is-dark & {
+      @apply bg-dark-gray-900;
+    }
+  }
+  &.is-interactive {
+    @apply cursor-pointer;
   }
 }
 
 #{el('item-icon')} {
-  @apply w-[20px] h-[20px] text-gray-600;
+  @apply w-[16px] h-[16px] text-gray-600;
   stroke: currentColor;
   fill: none;
   stroke-width: 2;
@@ -67,29 +86,37 @@ $ROOT: shared.makeRoot('Sidebar');
   #{$ROOT}.size-large & {
     @apply w-[32px] h-[32px];
   }
+
+  #{el('item')}.is-selected & {
+    @apply text-purple-600;
+  }
 }
 
 #{el('item-label')} {
-  @apply line-clamp-1;
+  @apply line-clamp-1 text-gray-900;
+
+  #{$ROOT}.is-dark & {
+    @apply text-gray-50;
+  }
 
   #{$ROOT}.size-small & {
-    @apply text-[14px] leading-[20px];
+    @apply text-xs leading-[16px];
   }
 
   #{$ROOT}.size-medium & {
-    @apply text-[16px] leading-[24px];
+    @apply text-base leading-[24px];
   }
 
   #{$ROOT}.size-large & {
-    @apply text-[20px] leading-[32px];
+    @apply text-xl leading-[32px];
   }
 }
 
 #{el('item-badge')} {
-  @apply absolute rounded-md bg-purple-100 text-purple-600 transition-all duration-500 text-[12px] w-[20px] h-[20px];
+  @apply absolute rounded-md bg-purple-100 text-purple-600 transition-all duration-500;
 
   #{$ROOT}.size-small &, #{$ROOT}.size-medium &, #{$ROOT}.size-large & {
-    @apply text-[12px] w-[20px] h-[20px] right-[16px];
+    @apply text-xs leading-[20px] w-[20px] h-[20px] right-[16px];
   }
 
   #{$ROOT}.is-dark & {
@@ -97,7 +124,7 @@ $ROOT: shared.makeRoot('Sidebar');
   }
 
   #{$ROOT}.size-small & {
-    @apply top-[16px];
+    @apply top-[14px];
   }
 
   #{$ROOT}.size-medium & {
@@ -109,28 +136,16 @@ $ROOT: shared.makeRoot('Sidebar');
   }
 
   #{$ROOT}.is-collapsed & {
-    @apply rounded-full bg-purple-600 text-purple-50 text-[10px] w-[18px] h-[18px];
+    @apply rounded-full bg-purple-600 text-purple-50 text-[10px] w-[16px] h-[16px];
   }
   #{$ROOT}.is-collapsed.size-small & {
-    @apply right-[8px] top-[8px];
+    @apply right-[6px] top-[8px];
   }
   #{$ROOT}.is-collapsed.size-medium & {
     @apply right-[10px] top-[10px];
   }
   #{$ROOT}.is-collapsed.size-large & {
-    @apply right-[12px] top-[12px];
-  }
-}
-
-#{el('overlay')} {
-  @apply absolute top-0 left-0 w-full h-full bg-dark-gray-50 transition opacity-0;
-
-  #{el('item')}.is-hovered & {
-    @apply opacity-10;
-  }
-
-  #{el('item')}.is-pressed & {
-    @apply opacity-30;
+    @apply right-[20px] top-[12px];
   }
 }
 

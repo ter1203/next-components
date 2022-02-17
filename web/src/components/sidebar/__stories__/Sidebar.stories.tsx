@@ -6,13 +6,9 @@ import type { SidebarProps } from '../Sidebar';
 import Sidebar from '../Sidebar';
 import Icon from '../../icon/Icon'
 import type { SidebarItemProps } from '../SidebarItem';
-import SidebarItem, { SidebarPadding } from '../SidebarItem';
-import Text from '../../text/Text'
+import SidebarItem, { SidebarSectionSpacer } from '../SidebarItem';
+import { enableAddons } from '@/utils/storybook-shared';
 import {
-  enableAddons,
-  addCustomControls,
-} from '@/utils/storybook-shared';
-import { 
   createHome,
   createMenu,
   svgSetting,
@@ -33,6 +29,18 @@ export default {
   component: Sidebar,
 };
 
+// Logo
+
+const Logo = (): ReactElement => (
+  <Icon
+    size='custom'
+    content={iconSupport}
+    className='text-purple-600 w-8 h-8 mx-2'
+    viewBoxHeight={24}
+    viewBoxWidth={24}
+  />
+)
+
 // playground
 const PlaygroundTemplate: Story<SidebarProps> = (props: SidebarProps) => {
   const [open, setOpen] = useState(true)
@@ -41,10 +49,11 @@ const PlaygroundTemplate: Story<SidebarProps> = (props: SidebarProps) => {
     setOpen(!props.isCollapsed)
   }, [props.isCollapsed])
 
-  const realProps = {
-    ...props,
-    isCollapsed: !open
+  const defaultProps = {
+    _iconViewbox: 24,
+    onPress: action('press')
   }
+
   return (
     <div className='flex flex-col bg-dark-gray-600'>
       <div className='flex p-2 h-14'>
@@ -56,18 +65,38 @@ const PlaygroundTemplate: Story<SidebarProps> = (props: SidebarProps) => {
         </div>
       </div>
       <div className="flex w-[800px] h-[800px] bg-white overflow-y-auto">
-        <Sidebar {...realProps} className='w-[320px]'>
-          <SidebarItem icon={createHome} iconViewbox={24} label='Home' onPress={action('press')} />
-          <SidebarItem icon={iconReport} iconViewbox={24} label='Reports' onPress={action('press')} />
-          <SidebarItem icon={iconLibrary} iconViewbox={24} label='Library' onPress={action('press')} />
-          <SidebarItem icon={iconCalendar} iconViewbox={24} label='Calendar' onPress={action('press')} />
-          <SidebarItem icon={iconBolt} iconViewbox={24} label='Integrations' onPress={action('press')} />
-          <SidebarItem icon={iconDocument} iconViewbox={24} label='Documents' onPress={action('press')} />
-          <SidebarPadding />
-          <SidebarItem icon={iconMail} iconViewbox={24} label='Messages' onPress={action('press')} badge='3' />
-          <SidebarItem icon={iconBell} iconViewbox={24} label='Notifications' onPress={action('press')} badge='6' />
-          <SidebarItem icon={svgSetting} iconViewbox={24} label='Settings' onPress={action('press')} />
-          <SidebarItem icon={iconUser} iconViewbox={24} label='Profile' onPress={action('press')} />
+        <Sidebar {...props} isCollapsed={!open} className='w-[320px]'>
+          <SidebarItem icon={createHome} {...defaultProps}>
+            Home
+          </SidebarItem>
+          <SidebarItem icon={iconReport} {...defaultProps}>
+            Reports
+          </SidebarItem>
+          <SidebarItem icon={iconLibrary} {...defaultProps}>
+            Library
+          </SidebarItem>
+          <SidebarItem icon={iconCalendar} {...defaultProps}>
+            Calendar
+          </SidebarItem>
+          <SidebarItem icon={iconBolt} {...defaultProps}>
+            Integrations
+          </SidebarItem>
+          <SidebarItem icon={iconDocument} {...defaultProps}>
+            Documents
+          </SidebarItem>
+          <SidebarSectionSpacer />
+          <SidebarItem icon={iconMail} {...defaultProps} badge='3'>
+            Messages
+          </SidebarItem>
+          <SidebarItem icon={iconBell} {...defaultProps} badge='6'>
+            Notifications
+          </SidebarItem>
+          <SidebarItem icon={svgSetting} {...defaultProps}>
+            Settings
+          </SidebarItem>
+          <SidebarItem icon={iconUser} {...defaultProps}>
+            Profile
+          </SidebarItem>
         </Sidebar>
       </div>
     </div>
@@ -76,83 +105,116 @@ const PlaygroundTemplate: Story<SidebarProps> = (props: SidebarProps) => {
 
 export const Playground = PlaygroundTemplate.bind({});
 Playground.args = {
-  logo: <Icon
-    content={iconSupport}
-    className='text-purple-600 !w-8 !h-8 mx-2'
-    viewBoxHeight={24}
-    viewBoxWidth={24}
-  />
+  logo: <Logo />
 };
 enableAddons(Playground, ['controls', 'actions', 'a11y', 'backgrounds']);
 
+const SidebarItemVariant = (): ReactElement => {
+  return (
+    <>
+      <SidebarItem icon={createHome} _iconViewbox={24}>
+        Item without badge
+      </SidebarItem>
+      <SidebarItem icon={createHome} _iconViewbox={24} badge='6'>
+        Item with badge
+      </SidebarItem>
+      <SidebarItem icon={createHome} _iconViewbox={24} badge='11' onPress={action('press')}>
+        Interactive item
+      </SidebarItem>
+      <SidebarItem icon={createHome} _iconViewbox={24} onPress={action('press')} isSelected>
+        Selected item
+      </SidebarItem>
+    </>
+  )
+}
+
+const SidebarVariant = (
+  { title, size }: { title: string, size?: 'small' | 'medium' | 'large' }
+): ReactElement => {
+  return (
+    <>
+      <h2 className='text-body-lg-heavy mt-6 mb-2'>{title}</h2>
+      <h3 className='text-body-md-heavy my-2'>Normal</h3>
+      <Sidebar logo={<Logo />} size={size}>
+        <SidebarItemVariant />
+      </Sidebar>
+      <h3 className='text-body-md-heavy my-2'>Dark mode</h3>
+      <Sidebar logo={<Logo />} size={size} isDarkMode>
+        <SidebarItemVariant />
+      </Sidebar>
+      <h3 className='text-body-md-heavy my-2'>Collapsed</h3>
+      <Sidebar logo={<Logo />} size={size} isDarkMode isCollapsed>
+        <SidebarItemVariant />
+      </Sidebar>
+    </>
+  )
+}
 const ItemTemplate: Story<SidebarItemProps> = () => {
   return (
     <div>
-      <div className='create-Sidebar size-small'>
-        <SidebarItem icon={createHome} label='Small item without badge' />
-      </div>
-
-      <div className='create-Sidebar size-medium'>
-        <SidebarItem icon={createHome} label='Medium item without badge' />
-      </div>
-
-      <div className='create-Sidebar size-large'>
-        <SidebarItem icon={createHome} label='Large item without badge' />
-      </div>
-
-      <div className='create-Sidebar size-small'>
-        <SidebarItem icon={createHome} label='Small item with badge' badge='3' />
-      </div>
-
-      <div className='create-Sidebar size-medium'>
-        <SidebarItem icon={createHome} label='Medium item with badge' badge='6' />
-      </div>
-
-      <div className='create-Sidebar size-large'>
-        <SidebarItem icon={createHome} label='Large item with badge' badge='11' />
-      </div>
-
-      <div className='create-Sidebar size-small is-dark'>
-        <SidebarItem icon={createHome} label='Small item in dark' badge='3' />
-      </div>
-
-      <div className='create-Sidebar size-medium is-dark'>
-        <SidebarItem icon={createHome} label='Medium item in dark' badge='6' />
-      </div>
-
-      <div className='create-Sidebar size-large is-dark'>
-        <SidebarItem icon={createHome} label='Large item in dark' badge='11' />
-      </div>
-
-      <div className='create-Sidebar size-small is-collapsed'>
-        <SidebarItem icon={createHome} label='Small item collapsed' badge='3' />
-      </div>
-
-      <div className='create-Sidebar size-medium is-collapsed'>
-        <SidebarItem icon={createHome} label='Medium item collapsed' badge='6' />
-      </div>
-
-      <div className='create-Sidebar size-large is-collapsed'>
-        <SidebarItem icon={createHome} label='Large item collapsed' badge='11' />
-      </div>
-
-      <div className='create-Sidebar size-small'>
-        <SidebarItem icon={createHome} label='Small item with badge' badge='3' onPress={action('press')} />
-      </div>
-
-      <div className='create-Sidebar size-medium'>
-        <SidebarItem icon={createHome} label='Medium item with badge' badge='6' onPress={action('press')} />
-      </div>
-
-      <div className='create-Sidebar size-large'>
-        <SidebarItem icon={createHome} label='Large item with badge' badge='11' onPress={action('press')} />
-      </div>
+      <SidebarVariant title='Small Sidebar' size='small' />
+      <SidebarVariant title='Medium Sidebar' size='medium' />
+      <SidebarVariant title='Large Sidebar' size='large' />
     </div>
   )
 }
 
 export const ItemExample = ItemTemplate.bind({})
 ItemExample.args = {
-  icon: createHome,
-  label: 'Hello world'
+  icon: createHome
+}
+
+const SidebarSpacerVariant = (
+  { spacer, collapsed }: { spacer: boolean, collapsed?: boolean }
+): ReactElement => {
+  const defaultProps = {
+    _iconViewbox: 24,
+    onPress: action('press')
+  }
+
+  return (
+    <>
+      <Sidebar logo={<Logo />} isCollapsed={collapsed}>
+        <SidebarItem icon={createHome} {...defaultProps}>
+          Home
+        </SidebarItem>
+        <SidebarItem icon={iconReport} {...defaultProps}>
+          Reports
+        </SidebarItem>
+        {spacer && <SidebarSectionSpacer />}
+        <SidebarItem icon={iconMail} {...defaultProps} badge='3'>
+          Messages
+        </SidebarItem>
+        <SidebarItem icon={iconUser} {...defaultProps}>
+          Profile
+        </SidebarItem>
+      </Sidebar>
+    </>
+  )
+}
+
+const SpacerCompare = ({ collapsed }: { collapsed?: boolean }): ReactElement => (
+  <div className={`flex justify-between w-[768px] h-full bg-white overflow-y-auto`}>
+    <SidebarSpacerVariant spacer collapsed={collapsed} />
+    <SidebarSpacerVariant spacer={false} collapsed={collapsed} />
+  </div>
+)
+
+export const SectionSpacerExample = (): ReactElement => {
+  return (
+    <div>
+      <h2 className='text-body-lg-heavy mt-6 mb-2'>Normal</h2>
+      <div className='h-[400px]'>
+        <SpacerCompare />
+      </div>
+      <h2 className='text-body-lg-heavy mt-6 mb-2'>Small Height(200px)</h2>
+      <div className='h-[240px]'>
+        <SpacerCompare />
+      </div>
+      <h2 className='text-body-lg-heavy mt-6 mb-2'>Collapsed</h2>
+      <div className='h-[400px]'>
+        <SpacerCompare collapsed />
+      </div>
+    </div>
+  )
 }
