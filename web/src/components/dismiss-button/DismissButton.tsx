@@ -70,12 +70,14 @@ function DismissButtonComponent(
     buttonProps, hoverProps, focusProps, tooltipForwardProps
   )
 
-  const getContent = () => {
-    if (p.variant === 'default') {
-      return <Icon content={createClose} className={el`icon`} />
-    } else {
-      return <Icon content={createRingCross} className={el`icon`} />
-    }
+  const getIconForVariant = () => {
+    return (
+      <Icon
+        content={p.variant === 'default' ? createClose : createRingCross}
+        className={el`icon`}
+        size='custom'
+      />
+    )
   }
 
   return (
@@ -92,7 +94,7 @@ function DismissButtonComponent(
           p.className
         )}
       >
-        {getContent()}
+        {getIconForVariant()}
       </button>
     </OptionalTooltip>
   ); 

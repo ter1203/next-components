@@ -1,6 +1,6 @@
 export { default as buttonize } from './buttonize';
 export { makeElementClassNameFactory, makeRootClassName } from './classnames';
-export type { OmittedAriaProps, OmittedLinkProps, StyleProps } from './shared-types';
+export type { OmittedAriaProps, StyleProps } from './shared-types';
 export {
   addCustomControls,
   disableControls,

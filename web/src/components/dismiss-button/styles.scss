@@ -8,11 +8,10 @@ $ROOT: shared.makeRoot('DismissButton');
 }
 
 #{$ROOT} {
-  @apply rounded-full text-black opacity-80 bg-transparent outline-none transition-all;
-  transition: all 0.2s cubic-bezier(0.75, -1.27, 0.3, 2.33);
+  @apply rounded-full text-gray-900 bg-transparent outline-none transition-all ease-in-out duration-200;
 
   &.is-hovered {
-    @apply opacity-95;
+    @apply text-dark-gray-900;
   }
 
   &.is-pressed {

@@ -3,4 +3,3 @@ export type StyleProps = {
 };
 
 export type OmittedAriaProps = 'elementType' | 'type' | 'children';
-export type OmittedLinkProps = 'href' | 'target' | 'rel';
