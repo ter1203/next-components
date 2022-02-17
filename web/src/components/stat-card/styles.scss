@@ -9,14 +9,14 @@ $ROOT: shared.makeRoot('StatCard');
 
 #{$ROOT} {
   @apply flex bg-white relative flex-shrink-0 gap-[8px] justify-between rounded-md shadow-sm;
-  @apply h-[80px] py-[8px] select-none;
+  @apply h-[80px] py-[12px] select-none;
 
   &.is-interactive {
     @apply cursor-pointer;
   }
 
   &.size-small {
-    @apply w-[160px] px-[8px];
+    @apply w-[160px] px-[12px];
   }
 
   &.size-medium {
@@ -33,7 +33,7 @@ $ROOT: shared.makeRoot('StatCard');
 }
 
 #{el('trend-end')}, #{el('trend-center')} {
-  @apply flex-shrink-0 w-[48px] h-full flex justify-end items-center mr-[-4px];
+  @apply flex-shrink-0 w-[48px] h-full flex justify-end items-center;
 
   #{$ROOT}.size-medium & {
     @apply w-[64px];
@@ -53,7 +53,7 @@ $ROOT: shared.makeRoot('StatCard');
 }
 
 #{el('icon')} {
-  @apply w-[20px] h-[20px] my-[4px] rounded-md;
+  @apply w-[20px] h-[20px] rounded-md;
 }
 
 #{el('title')} {
@@ -70,6 +70,10 @@ $ROOT: shared.makeRoot('StatCard');
 
 #{el('desc')} {
   @apply font-normal text-gray-600 line-clamp-1 mt-0;
+
+  #{$ROOT} & {
+    @apply leading-[12px];
+  }
 }
 
 #{el('overlay')} {
@@ -94,7 +98,7 @@ $ROOT: shared.makeRoot('StatCard');
 
 #{el('badge')} {
 
-  @apply absolute top-[8px] right-[8px] rounded-md px-[8px] py-[4px];
+  @apply absolute top-[12px] right-[12px] rounded-md px-[8px] py-[4px];
   @apply  stroke-2;
 
   #{$ROOT}.variant-default & {
