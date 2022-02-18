@@ -1,36 +1,38 @@
-import { createClose } from '@/assets/icons';
-import {
-  makeElementClassNameFactory,
-  makeRootClassName,
-  OmittedAriaProps,
-  StyleProps,
-} from '@/utils';
-import { useOptionalRef } from '@/hooks';
+import React, { ForwardedRef, ReactElement, useRef } from 'react';
+import clsx from 'clsx';
 import { ForwardRefComponent } from '@radix-ui/react-polymorphic';
 import { useButton } from '@react-aria/button';
 import { useHover } from '@react-aria/interactions';
 import { mergeProps } from '@react-aria/utils';
 import { AriaButtonProps } from '@react-types/button';
-import clsx from 'clsx';
-import React, { ForwardedRef, ReactElement, useRef } from 'react';
-import { Icon } from '..';
+import { createClose } from '@/assets/icons';
+import {
+  makeElementClassNameFactory,
+  makeRootClassName,
+  OmittedAriaProps,
+  StyleProps
+} from '@/utils';
+import { useOptionalRef } from '@/hooks';
+import { Icon } from '../icon';
+import Avatar from '../avatar/Avatar'
+import type { AvatarProps } from '../avatar/Avatar';
 
 export type BadgeProps = StyleProps &
-  Omit<
+  Pick<AvatarProps, 'image'> & Omit<
     AriaButtonProps<'button'>,
-    OmittedAriaProps | 'href' | 'rel' | 'target'
+    OmittedAriaProps | 'target' | 'href' | 'rel'
   > & {
     /**
      * The size of the badge.
      * @default "medium"
      */
-    size?: 'small' | 'medium';
+    size?: 'small' | 'medium' | 'large';
 
     /**
      * The badge style variant.
      * @default "default"
      */
-    variant?: 'default' | 'primary' | 'close' | 'open' | 'update';
+    variant?: 'default' | 'primary' | 'success' | 'danger' | 'dark' | 'info' | 'warning' | 'ghost';
 
     /**
      * Whether the badge is visually outlined.
@@ -39,10 +41,10 @@ export type BadgeProps = StyleProps &
     isOutline?: boolean;
 
     /**
-     * Whether the badge can be dismissed.
-     * @default false
+     * Whether the badge is lightened
+     * @default 'true'
      */
-    isDismissible?: boolean;
+    isLight?: boolean;
 
     /** The badge's icon (svg path). */
     icon?: string;
@@ -50,7 +52,10 @@ export type BadgeProps = StyleProps &
     /** The badge's content. */
     children?: string | number;
 
-    /** Handler that is called when the badge is dismissed. */
+    /**
+     * Handler that is called when the badge is dismissed.
+     * Whether the badge can be dismissed is determined by this value
+     */
     onDismiss?: () => void;
   };
 
@@ -105,12 +110,14 @@ function Badge(
   const p = { ...DEFAULT_PROPS, ...props };
   const domRef = useOptionalRef(ref);
 
-  const isInteractive = !!p.onPress;
+  const isInteractive = !!p.onDismiss;
   const { buttonProps, isPressed } = useButton(p, domRef);
   const { hoverProps, isHovered } = useHover({ isDisabled: p.isDisabled });
   const interactiveProps = isInteractive ? [buttonProps, hoverProps] : [];
   const behaviorProps = mergeProps(...interactiveProps);
 
+  const hasAvatar = p.image;
+  const hasIcon = p.icon || hasAvatar
   return (
     <PolymorphicBadge
       as={isInteractive ? 'button' : 'div'}
@@ -118,18 +125,28 @@ function Badge(
       className={clsx([
         `${ROOT} size-${p.size} variant-${p.variant}`,
         {
-          'has-icon': p.icon,
-          'has-trailing-icon': p.isDismissible,
+          'is-outline': p.isOutline,
+          'is-light': p.isLight,
+          'has-icon': hasIcon,
+          'has-avatar': hasAvatar,
+          'is-interactive': isInteractive,
           'is-hovered': isHovered,
           'is-pressed': isPressed,
-          'is-outline': p.isOutline,
         },
         p.className,
       ])}
     >
-      {p.icon && <Icon className={el`icon`} content={p.icon} size="custom" />}
-      {p.children && <span>{p.children}</span>}
-      {p.isDismissible && <DismissButton onPress={p.onDismiss} />}
+      {hasIcon ? hasAvatar ? (
+        <Avatar
+          image={p.image}
+          size="custom"
+          className={el`avatar`}
+        />
+      ) : (
+        <Icon className={el`icon`} content={p.icon} size="custom" />
+      ) : null}
+      {p.children}
+      {p.onDismiss && <DismissButton onPress={p.onDismiss} />}
     </PolymorphicBadge>
   );
 }
