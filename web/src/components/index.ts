@@ -20,5 +20,7 @@ export { Avatar } from './avatar';
 export type { AvatarProps } from './avatar';
 export { DismissButton } from './dismiss-button';
 export type { DismissButtonProps } from './dismiss-button';
+export { StatCard } from './stat-card';
+export type { StatCardProps } from './stat-card'
 export { Sidebar } from './sidebar';
 export type { SidebarProps } from './sidebar'

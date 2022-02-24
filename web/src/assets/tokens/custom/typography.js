@@ -66,6 +66,9 @@ module.exports = {
 
   // heavy variants
 
+  '.text-heavy': {
+    fontWeight: 600
+  },
   '.text-body-sm-heavy': {
     ...typography['.text-body-sm'],
     fontWeight: 600,

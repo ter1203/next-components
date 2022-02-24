@@ -12,10 +12,10 @@ import { useHover } from '@react-aria/interactions';
 import { mergeProps } from '@react-aria/utils';
 import { AriaButtonProps } from '@react-types/button';
 import clsx from 'clsx';
-import React, { ForwardedRef, ReactElement, useRef } from 'react';
+import React, { ForwardedRef, PropsWithChildren, ReactElement, useRef } from 'react';
 import { Icon } from '..';
 
-export type BadgeProps = StyleProps &
+export type BadgeProps = PropsWithChildren<StyleProps> &
   Omit<
     AriaButtonProps<'button'>,
     OmittedAriaProps | 'href' | 'rel' | 'target'
@@ -46,9 +46,6 @@ export type BadgeProps = StyleProps &
 
     /** The badge's icon (svg path). */
     icon?: string;
-
-    /** The badge's content. */
-    children?: string | number;
 
     /** Handler that is called when the badge is dismissed. */
     onDismiss?: () => void;
@@ -128,7 +125,7 @@ function Badge(
       ])}
     >
       {p.icon && <Icon className={el`icon`} content={p.icon} size="custom" />}
-      {p.children && <span>{p.children}</span>}
+      {p.children}
       {p.isDismissible && <DismissButton onPress={p.onDismiss} />}
     </PolymorphicBadge>
   );
