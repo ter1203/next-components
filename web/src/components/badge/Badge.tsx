@@ -23,16 +23,16 @@ export type BadgeProps = StyleProps &
     OmittedAriaProps | 'target' | 'href' | 'rel'
   > & {
     /**
-     * The size of the badge.
+     * Size of the badge.
      * @default "medium"
      */
-    size?: 'small' | 'medium' | 'large';
+    size?: 'small' | 'medium';
 
     /**
-     * The badge style variant.
+     * The badge's visual appearance.
      * @default "default"
      */
-    variant?: 'default' | 'primary' | 'success' | 'danger' | 'dark' | 'info' | 'warning' | 'ghost';
+    variant?: 'default' | 'primary' | 'success' | 'danger' | 'dark' | 'info' | 'warning';
 
     /**
      * Whether the badge is visually outlined.
@@ -41,15 +41,20 @@ export type BadgeProps = StyleProps &
     isOutline?: boolean;
 
     /**
-     * Whether the badge is lightened
-     * @default 'true'
+     * Whether the badge is light mode
      */
     isLight?: boolean;
 
-    /** The badge's icon (svg path). */
+    /**
+     * Whether the badge has de-emphasized (ghost) styles.
+     * @default false
+     */
+     isGhost?: boolean;
+
+    /** Icon data of the badge */
     icon?: string;
 
-    /** The badge's content. */
+    /** Content of the badge */
     children?: string | number;
 
     /**
@@ -66,7 +71,7 @@ const DEFAULT_PROPS = {
   size: 'medium',
   variant: 'default',
   isOutlined: false,
-  isDismissible: false,
+  isGhost: false,
 } as const;
 
 const DISMISS_ICON = createClose;
@@ -127,6 +132,7 @@ function Badge(
         {
           'is-outline': p.isOutline,
           'is-light': p.isLight,
+          'is-ghost': p.isGhost,
           'has-icon': hasIcon,
           'has-avatar': hasAvatar,
           'is-interactive': isInteractive,

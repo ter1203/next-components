@@ -7,14 +7,14 @@ $ROOT: shared.makeRoot("Badge");
   @return shared.makeSubElementName($ROOT, $name);
 }
 
-@mixin interactiveColors($variant) {
-  @apply bg-#{$variant}-700 text-light-gray-500;
+@mixin interactiveColorsForVariant($variant) {
+  @apply bg-#{$variant}-500 text-white;
 
   &.is-hovered {
-    @apply bg-#{$variant}-400;
+    @apply bg-#{$variant}-600;
   }
   &.is-pressed {
-    @apply bg-#{$variant}-500;
+    @apply bg-#{$variant}-700;
   }
 
   &.is-light {
@@ -51,6 +51,17 @@ $ROOT: shared.makeRoot("Badge");
   }
 }
 
+@mixin ghostColorsForVariant($variant) {
+  @apply text-#{$variant}-700;
+
+  &.is-hovered {
+    @apply bg-#{$variant}-100;
+  }
+  &.is-pressed {
+    @apply bg-#{$variant}-200;
+  }
+}
+
 #{$ROOT} {
   @apply rounded-md overflow-hidden select-none whitespace-nowrap;
   @apply inline-flex justify-center items-center gap-[4px] px-[6px] py-[4px];
@@ -59,55 +70,11 @@ $ROOT: shared.makeRoot("Badge");
   // sizes
 
   &.size-small {
-    @apply text-body-sm-heavy h-[20px];
+    @apply text-body-sm-heavy leading-[20px] h-[20px];
   }
 
   &.size-medium {
     @apply text-body-md-heavy h-[24px];
-  }
-
-  &.size-large {
-    @apply text-body-lg-heavy h-[28px];
-  }
-
-  &.is-hovered {
-    @apply bg-gray-100;
-  }
-  &.is-pressed {
-    @apply bg-gray-200;
-  }
-
-  &.is-light {
-    @apply bg-white text-black;
-
-    &.is-hovered {
-      @apply bg-gray-100;
-    }
-    &.is-pressed {
-      @apply bg-gray-200;
-    }
-  }
-
-  &.is-outline {
-    @apply border border-black bg-transparent text-black;
-
-    &.is-hovered {
-      @apply border-dark-gray-800 text-dark-gray-800 bg-gray-100;
-    }
-    &.is-pressed {
-      @apply border-dark-gray-600 text-dark-gray-600 bg-gray-200;
-    }
-  }
-
-  &.is-outline.is-light {
-    @apply border border-gray-800 text-dark-gray-800;
-
-    &.is-hovered {
-      @apply border-gray-600 text-dark-gray-600 bg-gray-100;
-    }
-    &.is-pressed {
-      @apply border-gray-500 text-dark-gray-500 bg-gray-200;
-    }
   }
 
   &.has-avatar {
@@ -119,24 +86,24 @@ $ROOT: shared.makeRoot("Badge");
 
   // variants
 
-  &.variant-dark {
-    @apply bg-dark-gray-700 text-light-gray-500;
+  &.variant-default {
+    @apply bg-dark-gray-500 text-white;
 
     &.is-hovered {
-      @apply bg-dark-gray-400;
+      @apply bg-dark-gray-600;
     }
     &.is-pressed {
-      @apply bg-dark-gray-500;
+      @apply bg-dark-gray-700;
     }
 
     &.is-light {
-      @apply bg-gray-50 text-dark-gray-700;
+      @apply bg-light-gray-500 text-dark-gray-700;
 
       &.is-hovered {
-        @apply bg-gray-100;
+        @apply bg-light-gray-600;
       }
       &.is-pressed {
-        @apply bg-gray-200;
+        @apply bg-light-gray-700;
       }
     }
 
@@ -151,36 +118,71 @@ $ROOT: shared.makeRoot("Badge");
       }
 
       &.is-light {
-        @apply border border-gray-700 text-dark-gray-700 bg-gray-50;
+        @apply border border-gray-700 text-dark-gray-700 bg-light-gray-500;
 
         &.is-hovered {
-          @apply bg-gray-100 text-dark-gray-600;
+          @apply bg-light-gray-600;
         }
         &.is-pressed {
-          @apply bg-gray-200 text-dark-gray-500;
+          @apply bg-light-gray-700;
         }
       }
     }
   }
 
   &.variant-primary {
-    @include interactiveColors("purple");
+    @include interactiveColorsForVariant("red");
   }
 
   &.variant-success {
-    @include interactiveColors("green");
+    @include interactiveColorsForVariant("green");
   }
 
   &.variant-danger {
-    @include interactiveColors("red");
+    @include interactiveColorsForVariant("danger");
   }
 
   &.variant-info {
-    @include interactiveColors("blue");
+    @include interactiveColorsForVariant("blue");
   }
 
   &.variant-warning {
-    @include interactiveColors("yellow");
+    @include interactiveColorsForVariant("yellow");
+  }
+
+  &.is-ghost {
+    @apply border-none bg-white;
+
+    &.variant-default {
+      @apply text-dark-gray-700;
+
+      &.is-hovered {
+        @apply bg-light-gray-600;
+      }
+      &.is-pressed {
+        @apply bg-light-gray-700;
+      }
+    }
+
+    &.variant-primary {
+      @include ghostColorsForVariant("purple");
+    }
+
+    &.variant-success {
+      @include ghostColorsForVariant("green");
+    }
+  
+    &.variant-danger {
+      @include ghostColorsForVariant("red");
+    }
+  
+    &.variant-info {
+      @include ghostColorsForVariant("blue");
+    }
+  
+    &.variant-warning {
+      @include ghostColorsForVariant("yellow");
+    }
   }
 }
 
@@ -193,12 +195,8 @@ $ROOT: shared.makeRoot("Badge");
   #{$ROOT}.size-medium & {
     @apply w-[14px] h-[14px];
   }
-  #{$ROOT}.size-large & {
-    @apply w-[18px] h-[18px];
-  }
 }
 
-#{el('avatar')},
 #{el('icon')} {
   @apply border-none;
 
@@ -208,8 +206,16 @@ $ROOT: shared.makeRoot("Badge");
   #{$ROOT}.size-medium & {
     @apply w-[16px] h-[16px];
   }
-  #{$ROOT}.size-large & {
-    @apply w-[20px] h-[20px];
+}
+
+#{el('avatar')} {
+  @apply rounded-full;
+
+  #{$ROOT}.size-small & {
+    @apply w-[14px] h-[14px];
+  }
+  #{$ROOT}.size-medium & {
+    @apply w-[16px] h-[16px];
   }
 }
 

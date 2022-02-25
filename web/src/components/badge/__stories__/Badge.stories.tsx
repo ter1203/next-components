@@ -1,4 +1,4 @@
-import { createBell } from '@/assets/icons';
+import { createRingInfo } from '@/assets/icons';
 import { enableAddons } from '@/utils/storybook-shared';
 import { action } from '@storybook/addon-actions';
 import { Story } from '@storybook/react';
@@ -30,90 +30,53 @@ Playground.args = {
 enableAddons(Playground, ['controls', 'actions', 'a11y', 'backgrounds']);
 
 const BadgeByContent = (
-  { variant, size, isOutline, isLight }: Pick<BadgeProps, 'variant' | 'size' | 'isOutline' | 'isLight'>
+  { variant, size, isOutline, isLight, isGhost, children }: Pick<BadgeProps, 'variant' | 'size' | 'isOutline' | 'isLight' | 'isGhost' | 'children'>
 ): ReactElement => {
+
+  const defaultProps = {
+    variant, size, isOutline, isLight, isGhost
+  };
+
   return (
-    <div className='flex gap-4'>
-      <div className='w-[100px] flex'>
-        <Badge
-          variant={variant}
-          size={size}
-          isOutline={isOutline}
-          isLight={isLight}
-        >
-          Text
-        </Badge>
-      </div>
-      <div className='w-[100px] flex'>
-        <Badge
-          icon={createBell}
-          variant={variant}
-          size={size}
-          isOutline={isOutline}
-          isLight={isLight}
-        >
-          Text
-        </Badge>
-      </div>
-      <div className='w-[100px] flex'>
-        <Badge
-          onDismiss={action('press')}
-          variant={variant}
-          size={size}
-          isOutline={isOutline}
-          isLight={isLight}
-        >
-          Text
-        </Badge>
-      </div>
-      <div className='w-[100px] flex'>
-        <Badge
-          icon={createBell}
-          onDismiss={action('press')}
-          variant={variant}
-          size={size}
-          isOutline={isOutline}
-          isLight={isLight}
-        >
-          Text
-        </Badge>
-      </div>
-      <div className='w-[100px] flex'>
-        <Badge
-          image='/images/w3.png'
-          variant={variant}
-          size={size}
-          isOutline={isOutline}
-          isLight={isLight}
-        >
-          Text
-        </Badge>
-      </div>
-      <div className='w-[100px] flex'>
-        <Badge
-          image='/images/w3.png'
-          onDismiss={action('press')}
-          variant={variant}
-          size={size}
-          isOutline={isOutline}
-          isLight={isLight}
-        >
-          Text
-        </Badge>
-      </div>
-      <div className='w-[100px] flex'>
-        <Badge
-          icon={createBell}
-          image='/images/w3.png'
-          onDismiss={action('press')}
-          variant={variant}
-          size={size}
-          isOutline={isOutline}
-          isLight={isLight}
-        >
-          Text
-        </Badge>
-      </div>
+    <div className='flex gap-2 flex-wrap my-2'>
+      <Badge {...defaultProps}>{children}</Badge>
+
+      <Badge {...defaultProps} icon={createRingInfo}>
+        {children}
+      </Badge>
+
+      <Badge {...defaultProps} onDismiss={action('press')}>
+        {children}
+      </Badge>
+
+      <Badge
+        {...defaultProps}
+        icon={createRingInfo}
+        onDismiss={action('press')}
+      >
+        {children}
+      </Badge>
+
+      <Badge {...defaultProps} image='/images/avatar.png'>
+        {children}
+      </Badge>
+
+      <Badge
+        {...defaultProps}
+        image='/images/avatar.png'
+        onDismiss={action('press')}
+      >
+        {children}
+      </Badge>
+
+      <Badge
+        {...defaultProps}
+        icon={createRingInfo}
+        image='/images/avatar.png'
+        onDismiss={action('press')}
+      >
+        {children}
+      </Badge>
     </div>
   )
 }
@@ -124,39 +87,60 @@ const BadgeByOutline = (
   return (
     <div className='flex flex-col gap-2'>
       <h2 className='text-body-lg-heavy my-2'>{title}</h2>
-      <BadgeByContent size={size} variant={variant} />
-      <BadgeByContent size={size} variant={variant} isOutline />
-      <BadgeByContent size={size} variant={variant} isLight />
-      <BadgeByContent size={size} variant={variant} isOutline isLight />
+      <BadgeByContent size={size} variant={variant}>
+        Normal
+      </BadgeByContent>
+
+      <BadgeByContent size={size} variant={variant} isOutline>
+        Outlined
+      </BadgeByContent>
+
+      <BadgeByContent size={size} variant={variant} isLight>
+        Light Mode
+      </BadgeByContent>
+
+      <BadgeByContent size={size} variant={variant} isOutline isLight>
+        Outline and Light
+      </BadgeByContent>
+
+      <BadgeByContent size={size} variant={variant} isGhost>
+        Ghost
+      </BadgeByContent>
     </div>
   )
 }
 
-const BadgeByVariant = (
-  { size }: Pick<BadgeProps, 'size'>
+const BadgeBySize = (
+  { variant }: Pick<BadgeProps, 'variant'>
 ): ReactElement => {
   return (
     <div className='flex flex-col gap-y-4'>
-      <BadgeByOutline title='Variant - Default' variant='default' size={size} />
-      <BadgeByOutline title='Variant - Primary' variant='primary' size={size} />
-      <BadgeByOutline title='Variant - Danger' variant='danger' size={size} />
-      <BadgeByOutline title='Variant - Success' variant='success' size={size} />
-      <BadgeByOutline title='Variant - Info' variant='info' size={size} />
-      <BadgeByOutline title='Variant - Warning' variant='warning' size={size} />
-      <BadgeByOutline title='Variant - Dark' variant='dark' size={size} />
-      <BadgeByOutline title='Variant - Ghost' variant='ghost' size={size} />
+      <BadgeByOutline title='Small Badges' size='small' variant={variant} />
+      <BadgeByOutline title='Medium Badges' size='medium' variant={variant} />
     </div>
   )
 }
 
-export const Small = (): ReactElement => (
-  <BadgeByVariant size='small' />
+export const Default = (): ReactElement => (
+  <BadgeBySize variant='default' />
 )
 
-export const Medium = (): ReactElement => (
-  <BadgeByVariant size='medium' />
+export const Primary = (): ReactElement => (
+  <BadgeBySize variant='primary' />
 )
 
-export const Large = (): ReactElement => (
-  <BadgeByVariant size='large' />
+export const Danger = (): ReactElement => (
+  <BadgeBySize variant='danger' />
+)
+
+export const Success = (): ReactElement => (
+  <BadgeBySize variant='success' />
+)
+
+export const Info = (): ReactElement => (
+  <BadgeBySize variant='info' />
+)
+
+export const Warning = (): ReactElement => (
+  <BadgeBySize variant='warning' />
 )
