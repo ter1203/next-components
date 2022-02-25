@@ -165,7 +165,7 @@ $ROOT: shared.makeRoot("Badge");
     }
 
     &.variant-primary {
-      @include ghostColorsForVariant("purple");
+      @include ghostColorsForVariant("red");
     }
 
     &.variant-success {
@@ -173,7 +173,7 @@ $ROOT: shared.makeRoot("Badge");
     }
   
     &.variant-danger {
-      @include ghostColorsForVariant("red");
+      @include ghostColorsForVariant("danger");
     }
   
     &.variant-info {
