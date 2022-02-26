@@ -16,12 +16,10 @@ import { useOptionalRef } from '@/hooks';
 import { Icon } from '../icon';
 import Avatar from '../avatar/Avatar'
 import type { AvatarProps } from '../avatar/Avatar';
+import { DismissButton } from '..';
 
 export type BadgeProps = StyleProps &
-  Pick<AvatarProps, 'image'> & Omit<
-    AriaButtonProps<'button'>,
-    OmittedAriaProps | 'target' | 'href' | 'rel'
-  > & {
+  Pick<AvatarProps, 'image'> & {
     /**
      * Size of the badge.
      * @default "medium"
@@ -49,7 +47,7 @@ export type BadgeProps = StyleProps &
      * Whether the badge has de-emphasized (ghost) styles.
      * @default false
      */
-     isGhost?: boolean;
+    isGhost?: boolean;
 
     /** Icon data of the badge */
     icon?: string;
@@ -74,58 +72,24 @@ const DEFAULT_PROPS = {
   isGhost: false,
 } as const;
 
-const DISMISS_ICON = createClose;
 
-const PolymorphicBadge = React.forwardRef(function PolymorphicBadge(
-  { as: Comp = 'div', ...props },
-  forwardedRef
-) {
-  return <Comp {...props} ref={forwardedRef} />;
-}) as ForwardRefComponent<'div', unknown>;
-
-function DismissButton(p: AriaButtonProps<'button'>) {
-  const domRef = useRef<HTMLButtonElement>(null);
-
-  const { buttonProps, isPressed } = useButton(p, domRef);
-  const { hoverProps, isHovered } = useHover({ isDisabled: p.isDisabled });
-  const behaviorProps = mergeProps(buttonProps, hoverProps);
-
-  return (
-    <button
-      {...behaviorProps}
-      tabIndex={0}
-      className={clsx(el`dismiss-button`, {
-        'is-hovered': isHovered,
-        'is-pressed': isPressed,
-      })}
-    >
-      <Icon
-        className={el`dismiss-button-icon`}
-        content={DISMISS_ICON}
-        size="custom"
-      />
-    </button>
-  );
-}
-
-function Badge(
+function BadgeComponent(
   props: BadgeProps,
-  ref: ForwardedRef<HTMLButtonElement | HTMLDivElement>
+  ref: ForwardedRef<HTMLDivElement>
 ): ReactElement {
   const p = { ...DEFAULT_PROPS, ...props };
   const domRef = useOptionalRef(ref);
 
   const isInteractive = !!p.onDismiss;
   const { buttonProps, isPressed } = useButton(p, domRef);
-  const { hoverProps, isHovered } = useHover({ isDisabled: p.isDisabled });
+  const { hoverProps, isHovered } = useHover({isDisabled: !isInteractive});
   const interactiveProps = isInteractive ? [buttonProps, hoverProps] : [];
   const behaviorProps = mergeProps(...interactiveProps);
 
   const hasAvatar = p.image;
   const hasIcon = p.icon || hasAvatar
   return (
-    <PolymorphicBadge
-      as={isInteractive ? 'button' : 'div'}
+    <div
       {...behaviorProps}
       className={clsx([
         `${ROOT} size-${p.size} variant-${p.variant}`,
@@ -152,9 +116,17 @@ function Badge(
         <Icon className={el`icon`} content={p.icon} size="custom" />
       ) : null}
       {p.children}
-      {p.onDismiss && <DismissButton onPress={p.onDismiss} />}
-    </PolymorphicBadge>
+      {p.onDismiss && (
+        <DismissButton
+          onPress={p.onDismiss}
+          size='custom'
+          className={el`dismiss-button`}
+        />
+      )}
+    </div>
   );
 }
+
+const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(BadgeComponent);
 
 export default Badge;

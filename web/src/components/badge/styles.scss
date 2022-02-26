@@ -49,6 +49,12 @@ $ROOT: shared.makeRoot("Badge");
       }
     }
   }
+
+  & #{el('dismiss-button')} {
+    color: inherit;
+    transition: inherit;
+    @apply bg-transparent;
+  }
 }
 
 @mixin ghostColorsForVariant($variant) {
@@ -75,6 +81,10 @@ $ROOT: shared.makeRoot("Badge");
 
   &.size-medium {
     @apply text-body-md-heavy h-[24px];
+  }
+
+  &.is-hovered {
+    @apply cursor-pointer;
   }
 
   &.has-avatar {
@@ -127,6 +137,12 @@ $ROOT: shared.makeRoot("Badge");
           @apply bg-light-gray-700;
         }
       }
+    }
+
+    & #{el('dismiss-button')} {
+      color: inherit;
+      transition: inherit;
+      @apply bg-transparent;
     }
   }
 
@@ -219,6 +235,3 @@ $ROOT: shared.makeRoot("Badge");
   }
 }
 
-#{el('dismiss-button-icon')} {
-  @apply cursor-pointer w-full h-full;
-}
