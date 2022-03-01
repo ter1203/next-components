@@ -16,7 +16,8 @@
     "docker:exec": "docker exec -it web bash",
     "plop": "plop --plopfile scripts/plopfile.js",
     "plop:src": "plop --plopfile scripts/plopfile.js -- --where '@/components'",
-    "plop:here": "plop --plopfile scripts/plopfile.js -- --where './components'"
+    "plop:here": "plop --plopfile scripts/plopfile.js -- --where './components'",
+    "icon:feather": "node scripts/icon-creators/feather.js src/assets/icons/feather-paths.ts"
   },
   "dependencies": {
     "@apollo/client": "^3.5.8",
@@ -86,14 +87,17 @@
     "eslint": "^7.28.0",
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.3.0",
+    "oslllo-svg-fixer": "^2.0.1",
     "plop": "^3.0.5",
     "postcss": "^8.3.6",
     "prettier": "2.3.0",
     "sass-loader": "^10.1.1",
+    "scale-that-svg": "^1.0.5",
     "storybook-addon-apollo-client": "^4.0.8",
     "tailwindcss": "^2.2.9",
     "tsconfig-paths-webpack-plugin": "^3.5.2",
     "typescript": "^4.3.2",
+    "unzipper": "^0.10.11",
     "webpack": "5"
   },
   "sideEffects": [
