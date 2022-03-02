@@ -5,19 +5,18 @@ import unzipper, { File, CentralDirectory } from 'unzipper';
 import path from 'path';
 const scaler = require('scale-that-svg');
 const { parseSync } = require('xml-reader');
-const Svg  = require('oslllo-svg-fixer/src/svg');
+const Svg = require('oslllo-svg-fixer/src/svg');
 
 type IconBuffer = {
   name: string;
   content: string;
 }
 
-// Download the icons from github
 /**
+ * Download the icon repo from github and extract icons
  * @param url Github url of the icons
  * @param regex RegExp for picking icon files only
  * @returns Unzipped icon files
- * @description Download the icon repo from github and extract icons
  */
 export async function downloadIcons(url: string, regex: RegExp): Promise<File[]> {
   process.stdout.write('Downloading repo in zip ... ');
@@ -40,12 +39,11 @@ export async function downloadIcons(url: string, regex: RegExp): Promise<File[]>
 }
 
 /**
- * 
+ * Resize the viewbox to the desired size
  * @param icons Icon files
  * @param size Desired viewbox of svg icon
  * @param prefix Naming prefix of svg icon
  * @returns IconBuffer array containing icons name and content
- * @description Resize the viewbox to the desired size
  */
 export async function scaleIcons(icons: File[], size: number, prefix: string): Promise<IconBuffer[]> {
   process.stdout.write('Scaling icons ... ');
@@ -82,11 +80,10 @@ async function scaleIcon(icon: File, size: number, prefix: string): Promise<Icon
 }
 
 /**
- * 
+ * Fix icons. If icons are using stroke, convert them to use fill
  * @param icons Icons buffer(name and content)
  * @param tempFolder Temporary folder to be used for temp storage
  * @returns Fixed icons buffer
- * @description If icons are using stroke, convert them to use fill
  */
 export async function fixIcons(icons: IconBuffer[], tempFolder: string): Promise<IconBuffer[]> {
   process.stdout.write('Converting stroke to fill ... ')
@@ -107,10 +104,11 @@ async function fixIcon(name: string, content: string, tempFolder: string): Promi
 }
 
 /**
+ * Get icon name from its path. If prefix is feather and filepath is video-off.svg,
+ * icon name would be featherVideoOff.
  * @param prefix
  * @param filepath
  * @returns New icon name to be exported.
- * @description If prefix is feather and filepath is video-off.svg, icon name would be featherVideoOff.
  */
 function getIconVariableNameFromPath(prefix: string, filepath: string) {
   const basename = path.basename(filepath);
@@ -126,9 +124,9 @@ function getIconVariableNameFromPath(prefix: string, filepath: string) {
 }
 
 /**
+ * Merge all paths in a svg into one path
  * @param content Svg content
  * @returns Merged path
- * @description If there are several paths in a svg, all paths are merged and returned
  */
 function mergePath(content: any) {
   const xmlContent = parseSync(content);
@@ -140,28 +138,19 @@ function mergePath(content: any) {
 }
 
 /**
+ * Write icon paths to the output path.
  * @param icons Icons to output
  * @param outPath Output path
- * @description Write icon paths to the output path.
  */
 export async function writeIcons(icons: any, outPath: string, comment = ''): Promise<void> {
-  return new Promise<void>((resolve, reject) => {
-    const writer = fs.createWriteStream(outPath, { flags: 'w+' });
-    writer.on('finish', () => {
-      resolve();
-    });
-  
-    writer.on('error', (error: any) => {
-      reject(`An error occured while writing to the file. Error: ${error.message}`);
-    });
+  const writer = await fsPromise.open(outPath, 'w+');
+  await writer.write(`${comment}\n\n`);
 
-    writer.write(`${comment}\n`);
-    for (const { name, content } of icons) {
-      writer.write(`export const ${name} =\n  '${content}';\n\n`);
-    }
-  
-    writer.end();
-  })
+  for (const { name, content } of icons) {
+    await writer.write(`export const ${name} =\n  '${content}';\n\n`);
+  }
+
+  await writer.close();
 }
 
 /**
