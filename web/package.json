@@ -16,7 +16,8 @@
     "docker:exec": "docker exec -it web bash",
     "plop": "plop --plopfile scripts/plopfile.js",
     "plop:src": "plop --plopfile scripts/plopfile.js -- --where '@/components'",
-    "plop:here": "plop --plopfile scripts/plopfile.js -- --where './components'"
+    "plop:here": "plop --plopfile scripts/plopfile.js -- --where './components'",
+    "icon:hero": "node scripts/icon-creators/hero.js src/assets/icons/hero-paths.ts"
   },
   "dependencies": {
     "@apollo/client": "^3.5.8",

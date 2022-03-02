@@ -7,6 +7,7 @@ import {
 } from '../../../utils/storybook-shared';
 import * as pathIcons from '../../../assets/icons/paths';
 import * as svgIcons from '../../../assets/icons/svgs';
+import * as heroIcons from '../../../assets/icons/hero-paths';
 
 const { createCopy } = pathIcons;
 const { svgZoom } = svgIcons;
@@ -81,9 +82,11 @@ export const Colors = (): ReactElement => (
 
 // path icons
 
-export const PathIcons = (): ReactElement => (
+const PathIconsComponent = (
+  { prefix, icons }: { prefix: string, [key: string]: any }
+): ReactElement => (
   <div className="grid grid-cols-3 gap-[2rem]">
-    {Object.entries(pathIcons)
+    {Object.entries(icons)
       .sort(([nameA], [nameB]) => {
         if (nameA < nameB) return -1;
         if (nameA > nameB) return 1;
@@ -91,17 +94,22 @@ export const PathIcons = (): ReactElement => (
       })
       .map(([name, path]) => (
         <div className="flex flex-col items-center gap-[.5rem]">
-          <Icon key={name} content={path} />
+          <Icon key={name} content={`${path}`} />
           <p className="text-h5 text-dark">
             {name
-              .substr('create'.length)
+              .substr(prefix.length)
               .replace(/([A-Z])/g, ' $1')
               .trim()
               .toLowerCase()}
           </p>
+
         </div>
       ))}
   </div>
+);
+
+export const PathIcons = (): ReactElement => (
+  <PathIconsComponent icons={pathIcons} prefix='create' />
 );
 
 // svg icons
@@ -127,4 +135,10 @@ export const SvgIcons = (): ReactElement => (
         </div>
       ))}
   </div>
+);
+
+// hero icons
+
+export const HeroIcons = (): ReactElement => (
+  <PathIconsComponent icons={heroIcons} prefix='hero' />
 );
