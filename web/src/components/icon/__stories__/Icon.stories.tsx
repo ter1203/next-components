@@ -94,12 +94,15 @@ const PathIconsComponent = (
       .map(([name, path]) => (
         <div className="flex flex-col items-center gap-[.5rem]">
           <Icon key={name} content={`${path}`} />
-          <p className="text-h5 text-dark">
+          <p className="text-h5 text-dark text-center">
             {name
               .substr(prefix.length)
               .replace(/([A-Z])/g, ' $1')
               .trim()
-              .toLowerCase()}
+              .toLowerCase()
+            }
+            <br />
+            {name}
           </p>
         </div>
       ))}
