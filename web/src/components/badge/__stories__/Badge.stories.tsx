@@ -31,40 +31,29 @@ Playground.args = {
 enableAddons(Playground, ['controls', 'actions', 'a11y', 'backgrounds']);
 
 const BadgeByContent = (props: BadgeProps): ReactElement => {
-  const { children, ...others } = props;
   return (
     <div className='flex gap-2 flex-wrap my-2'>
-      <Badge {...others}>{children}</Badge>
+      <Badge {...props} />
 
-      <Badge {...others} icon={createRingInfo}>
-        {children}
-      </Badge>
+      <Badge {...props} icon={createRingInfo} />
 
-      <Badge {...others} onDismiss={action('press')} isDismissible>
-        {children}
-      </Badge>
+      <Badge {...props} onDismiss={action('press')} isDismissible />
 
       <Badge
-        {...others}
+        {...props}
         icon={createRingInfo}
         onDismiss={action('press')}
         isDismissible
-      >
-        {children}
-      </Badge>
+      />
 
-      <Badge {...others} avatar={AVATAR_URL}>
-        {children}
-      </Badge>
+      <Badge {...props} avatar={AVATAR_URL} />
 
       <Badge
-        {...others}
+        {...props}
         avatar={AVATAR_URL}
         onDismiss={action('press')}
         isDismissible
-      >
-        {children}
-      </Badge>
+      />
 
       <Badge
         {...props}
@@ -72,9 +61,7 @@ const BadgeByContent = (props: BadgeProps): ReactElement => {
         avatar={AVATAR_URL}
         onDismiss={action('press')}
         isDismissible
-      >
-        {children}
-      </Badge>
+      />
     </div>
   )
 }

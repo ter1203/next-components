@@ -1,15 +1,12 @@
-import React, { ForwardedRef, ReactElement, useRef } from 'react';
+import React, { ForwardedRef, ReactElement } from 'react';
 import clsx from 'clsx';
 import { ForwardRefComponent } from '@radix-ui/react-polymorphic';
 import { useButton } from '@react-aria/button';
 import { useHover } from '@react-aria/interactions';
 import { mergeProps } from '@react-aria/utils';
-import { AriaButtonProps } from '@react-types/button';
-import { createClose } from '@/assets/icons';
 import {
   makeElementClassNameFactory,
   makeRootClassName,
-  OmittedAriaProps,
   StyleProps
 } from '@/utils';
 import { useOptionalRef } from '@/hooks';
