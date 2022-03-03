@@ -1,5 +1,4 @@
 import fsPromise from 'fs/promises';
-import fs from 'fs';
 import axios from 'axios';
 import unzipper, { File, CentralDirectory } from 'unzipper';
 import path from 'path';
@@ -7,9 +6,22 @@ const scaler = require('scale-that-svg');
 const { parseSync } = require('xml-reader');
 const Svg = require('oslllo-svg-fixer/src/svg');
 
+const ICON_VIEWBOX_SIZE = 20;
+const TEMP_FOLDER = './temp';
+
 type IconBuffer = {
   name: string;
   content: string;
+}
+
+export async function prepare() {
+  if (!await exists(TEMP_FOLDER)) {
+    await fsPromise.mkdir(TEMP_FOLDER);
+  }
+}
+
+export async function finalize() {
+  await fsPromise.rmdir(TEMP_FOLDER, { recursive: true });
 }
 
 /**
@@ -45,16 +57,16 @@ export async function downloadIcons(url: string, regex: RegExp): Promise<File[]>
  * @param prefix Prefix to name svg icons
  * @returns IconBuffer array containing icons name and content
  */
-export async function scaleIcons(icons: File[], size: number, prefix: string): Promise<IconBuffer[]> {
+export async function scaleIcons(icons: File[], prefix: string): Promise<IconBuffer[]> {
   process.stdout.write('Scaling icons ... ');
-  const result = await Promise.all(icons.map(icon => scaleIcon(icon, size, prefix)));
+  const result = await Promise.all(icons.map(icon => scaleIcon(icon, prefix)));
   console.log('done');
 
   return result;
 }
 
 // Resize the viewbox of the svg icon
-async function scaleIcon(icon: File, size: number, prefix: string): Promise<IconBuffer> {
+async function scaleIcon(icon: File, prefix: string): Promise<IconBuffer> {
   const iconContent = await icon.buffer();
   const filepath = icon.path
   const xmlContent = parseSync(iconContent.toString());
@@ -71,7 +83,7 @@ async function scaleIcon(icon: File, size: number, prefix: string): Promise<Icon
 
   const scaled = await scaler.scale(
     iconContent,
-    { scale: size / width, round: 3 }
+    { scale: ICON_VIEWBOX_SIZE / width, round: 3 }
   );
 
   const name = getIconVariableNameFromPath(prefix, filepath);
@@ -85,17 +97,17 @@ async function scaleIcon(icon: File, size: number, prefix: string): Promise<Icon
  * @param tempFolder Temporary folder to be used for temp storage
  * @returns Fixed icons buffer
  */
-export async function fixIcons(icons: IconBuffer[], tempFolder: string): Promise<IconBuffer[]> {
+export async function fixIcons(icons: IconBuffer[]): Promise<IconBuffer[]> {
   process.stdout.write('Converting stroke to fill ... ')
-  const result = await Promise.all(icons.map(icon => fixIcon(icon.name, icon.content, tempFolder)));
+  const result = await Promise.all(icons.map(icon => fixIcon(icon.name, icon.content)));
   console.log('done');
 
   return result;
 }
 
 // Convert paths of svg icon from stroke into fill
-async function fixIcon(name: string, content: string, tempFolder: string): Promise<IconBuffer> {
-  const filepath = `${tempFolder}/${name}.svg`
+async function fixIcon(name: string, content: string): Promise<IconBuffer> {
+  const filepath = `${TEMP_FOLDER}/${name}.svg`
   await fsPromise.writeFile(filepath, content);
   const fixed = await new Svg(filepath).process();
   return {
@@ -157,7 +169,7 @@ export async function writeIcons(icons: any, outPath: string, comment = ''): Pro
  * @param path File or folder path
  * @returns Whether the given path exists on the fs
  */
-export async function exists(path: string): Promise<boolean> {
+async function exists(path: string): Promise<boolean> {
   try {
     await fsPromise.stat(path);
     return true;
