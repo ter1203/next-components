@@ -33,12 +33,12 @@ export async function finalize() {
 export async function downloadIcons(url: string, regex: RegExp): Promise<File[]> {
   process.stdout.write('Downloading repo in zip ... ');
   const { data } = await axios.get(url, { responseType: 'arraybuffer' });
-  console.log('done');
+  process.stdout.write('done\n');
 
   process.stdout.write('Unzipping files ... ');
   const unzipped: CentralDirectory = await unzipper.Open.buffer(Buffer.from(data));
   const files = unzipped.files;
-  console.log('done');
+  process.stdout.write('done\n');
 
   const icons: File[] = []
   for (const file of files) {
@@ -60,7 +60,7 @@ export async function downloadIcons(url: string, regex: RegExp): Promise<File[]>
 export async function scaleIcons(icons: File[], prefix: string): Promise<IconBuffer[]> {
   process.stdout.write('Scaling icons ... ');
   const result = await Promise.all(icons.map(icon => scaleIcon(icon, prefix)));
-  console.log('done');
+  process.stdout.write('done\n');
 
   return result;
 }
@@ -100,7 +100,7 @@ async function scaleIcon(icon: File, prefix: string): Promise<IconBuffer> {
 export async function fixIcons(icons: IconBuffer[]): Promise<IconBuffer[]> {
   process.stdout.write('Converting stroke to fill ... ')
   const result = await Promise.all(icons.map(icon => fixIcon(icon.name, icon.content)));
-  console.log('done');
+  process.stdout.write('done\n');
 
   return result;
 }
