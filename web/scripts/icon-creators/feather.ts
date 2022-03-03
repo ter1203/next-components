@@ -17,6 +17,7 @@ async function main(outPath: string) {
   const scaledIcons = await scaleIcons(icons, ICON_VIEWBOX_SIZE, 'feather');
   const fixedIcons = await fixIcons(scaledIcons, TEMP_FOLDER);
   await writeIcons(fixedIcons, outPath, COMMENT);
+
   await fsPromise.rmdir(TEMP_FOLDER, { recursive: true });
 }
 

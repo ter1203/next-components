@@ -41,8 +41,8 @@ export async function downloadIcons(url: string, regex: RegExp): Promise<File[]>
 /**
  * Resize the viewbox to the desired size
  * @param icons Icon files
- * @param size Desired viewbox of svg icon
- * @param prefix Naming prefix of svg icon
+ * @param size Desired viewbox of svg icons
+ * @param prefix Prefix to name svg icons
  * @returns IconBuffer array containing icons name and content
  */
 export async function scaleIcons(icons: File[], size: number, prefix: string): Promise<IconBuffer[]> {
