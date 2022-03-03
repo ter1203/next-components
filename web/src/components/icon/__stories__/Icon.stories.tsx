@@ -7,6 +7,7 @@ import {
 } from '../../../utils/storybook-shared';
 import * as pathIcons from '../../../assets/icons/paths';
 import * as svgIcons from '../../../assets/icons/svgs';
+import * as featherIcons from '../../../assets/icons/feather-paths';
 import * as heroIcons from '../../../assets/icons/hero-paths';
 
 const { createCopy } = pathIcons;
@@ -95,12 +96,15 @@ const PathIconsComponent = (
       .map(([name, path]) => (
         <div className="flex flex-col items-center gap-[.5rem]">
           <Icon key={name} content={`${path}`} />
-          <p className="text-h5 text-dark">
+          <p className="text-body-lg text-dark text-center">
             {name
               .substr(prefix.length)
               .replace(/([A-Z])/g, ' $1')
               .trim()
-              .toLowerCase()}
+              .toLowerCase()
+            }
+            <br />
+            {name}
           </p>
 
         </div>
@@ -109,7 +113,16 @@ const PathIconsComponent = (
 );
 
 export const PathIcons = (): ReactElement => (
-  <PathIconsComponent icons={pathIcons} prefix='create' />
+  <div>
+    <section className="flex flex-col justify-start items-center my-[2rem]">
+      <h2 className="text-body-lg-heavy my-[1rem]">Feather Icons</h2>
+      <PathIconsComponent icons={featherIcons} prefix='feather' />
+    </section>
+    <section className="flex flex-col justify-start items-center my-[2rem]">
+      <h2 className="text-body-lg-heavy my-[1rem]">Custom Path Icons</h2>
+      <PathIconsComponent icons={pathIcons} prefix='create' />
+    </section>
+  </div>
 );
 
 // svg icons
