@@ -110,7 +110,16 @@ const PathIconsComponent = (
 );
 
 export const PathIcons = (): ReactElement => (
-  <PathIconsComponent icons={pathIcons} prefix='create' />
+  <div>
+    <section className="flex flex-col justify-start items-center my-[2rem]">
+      <h2 className="text-body-lg-heavy my-[1rem]">Feather Icons</h2>
+      <PathIconsComponent icons={featherIcons} prefix='feather' />
+    </section>
+    <section className="flex flex-col justify-start items-center my-[2rem]">
+      <h2 className="text-body-lg-heavy my-[1rem]">Custom Path Icons</h2>
+      <PathIconsComponent icons={pathIcons} prefix='create' />
+    </section>
+  </div>
 );
 
 // svg icons
@@ -136,10 +145,4 @@ export const SvgIcons = (): ReactElement => (
         </div>
       ))}
   </div>
-);
-
-// feather icons
-
-export const FeatherIcons = (): ReactElement => (
-  <PathIconsComponent icons={featherIcons} prefix='feather' />
 );
