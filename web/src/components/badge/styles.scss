@@ -7,45 +7,45 @@ $ROOT: shared.makeRoot("Badge");
   @return shared.makeSubElementName($ROOT, $name);
 }
 
-@mixin interactiveColorsForVariant($variant) {
-  @apply bg-#{$variant}-500 text-white;
+@mixin interactiveColorsForVariant($color) {
+  @apply bg-#{$color}-500 text-white;
 
   &.is-hovered {
-    @apply bg-#{$variant}-600;
+    @apply bg-#{$color}-600;
   }
   &.is-pressed {
-    @apply bg-#{$variant}-700;
+    @apply bg-#{$color}-700;
   }
 
   &.is-light {
-    @apply bg-#{$variant}-50 text-#{$variant}-700;
+    @apply bg-#{$color}-50 text-#{$color}-700;
 
     &.is-hovered {
-      @apply bg-#{$variant}-100;
+      @apply bg-#{$color}-100;
     }
     &.is-pressed {
-      @apply bg-#{$variant}-200;
+      @apply bg-#{$color}-200;
     }
   }
 
   &.is-outline {
-    @apply border border-#{$variant}-700 bg-transparent text-#{$variant}-700;
+    @apply border border-#{$color}-700 bg-transparent text-#{$color}-700;
 
     &.is-hovered {
-      @apply border-#{$variant}-400 bg-#{$variant}-400 text-light-gray-500;
+      @apply border-#{$color}-400 bg-#{$color}-400 text-light-gray-500;
     }
     &.is-pressed {
-      @apply border-#{$variant}-500 bg-#{$variant}-500 text-light-gray-500;
+      @apply border-#{$color}-500 bg-#{$color}-500 text-light-gray-500;
     }
 
     &.is-light {
-      @apply border border-#{$variant}-300 text-#{$variant}-700 bg-#{$variant}-50;
+      @apply border border-#{$color}-300 text-#{$color}-700 bg-#{$color}-50;
 
       &.is-hovered {
-        @apply border-#{$variant}-200 text-#{$variant}-600 bg-#{$variant}-100;
+        @apply border-#{$color}-200 text-#{$color}-600 bg-#{$color}-100;
       }
       &.is-pressed {
-        @apply border-#{$variant}-100 text-#{$variant}-500 bg-#{$variant}-200;
+        @apply border-#{$color}-100 text-#{$color}-500 bg-#{$color}-200;
       }
     }
   }
@@ -57,14 +57,14 @@ $ROOT: shared.makeRoot("Badge");
   }
 }
 
-@mixin ghostColorsForVariant($variant) {
-  @apply text-#{$variant}-700;
+@mixin ghostColorsForVariant($color) {
+  @apply text-#{$color}-700;
 
   &.is-hovered {
-    @apply bg-#{$variant}-100;
+    @apply bg-#{$color}-100;
   }
   &.is-pressed {
-    @apply bg-#{$variant}-200;
+    @apply bg-#{$color}-200;
   }
 }
 
@@ -89,7 +89,8 @@ $ROOT: shared.makeRoot("Badge");
 
   &.has-avatar {
     @apply rounded-full flex-row-reverse px-[4px] pl-[6px];
-    &.is-interactive {
+    &.is-interactive,
+    &.has-icon {
       @apply flex-row px-[4px] pr-[6px];
     }
   }

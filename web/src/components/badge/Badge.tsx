@@ -18,78 +18,91 @@ import Avatar from '../avatar/Avatar'
 import type { AvatarProps } from '../avatar/Avatar';
 import { DismissButton } from '..';
 
-export type BadgeProps = StyleProps &
-  Pick<AvatarProps, 'image'> & {
-    /**
-     * Size of the badge.
-     * @default "medium"
-     */
-    size?: 'small' | 'medium';
+export type BadgeProps = StyleProps & {
+  /**
+   * Size of the badge.
+   * @default "medium"
+   */
+  size?: 'small' | 'medium';
 
-    /**
-     * The badge's visual appearance.
-     * @default "default"
-     */
-    variant?: 'default' | 'primary' | 'success' | 'danger' | 'dark' | 'info' | 'warning';
+  /**
+   * The badge's visual appearance.
+   * @default "default"
+   */
+  variant?: 'default' | 'primary' | 'success' | 'danger' | 'dark' | 'info' | 'warning';
 
-    /**
-     * Whether the badge is visually outlined.
-     * @default 'false'
-     */
-    isOutline?: boolean;
+  /**
+   * Whether the badge is visually outlined.
+   * @default 'false'
+   */
+  isOutline?: boolean;
 
-    /**
-     * Whether the badge is light mode
-     */
-    isLight?: boolean;
+  /**
+   * Whether the badge is light mode
+   * @default 'false'
+   */
+  isLight?: boolean;
 
-    /**
-     * Whether the badge has de-emphasized (ghost) styles.
-     * @default false
-     */
-    isGhost?: boolean;
+  /**
+   * Whether the badge has de-emphasized (ghost) styles.
+   * @default 'false'
+   */
+  isGhost?: boolean;
 
-    /** Icon data of the badge */
-    icon?: string;
+  /** The badge's icon (svg path). */
+  icon?: string;
 
-    /** Content of the badge */
-    children?: string | number;
+  /** Avatar of the badge */
+  avatar?: AvatarProps['image'];
 
-    /**
-     * Handler that is called when the badge is dismissed.
-     * Whether the badge can be dismissed is determined by this value
-     */
-    onDismiss?: () => void;
-  };
+  /** The badge's label */
+  children?: string | number;
+
+  /** Whether the badge is dismissible */
+  isDismissible?: boolean;
+
+  /**
+   * Handler that is called when the badge is dismissed.
+   * Whether the badge can be dismissed is determined by this value
+   */
+  onDismiss?: () => void;
+};
 
 const ROOT = makeRootClassName('Badge');
 const el = makeElementClassNameFactory(ROOT);
+
+const PolymorphicBadge = React.forwardRef(function PolymorphicBadge(
+  { as: Comp = 'div', ...props },
+  forwardedRef
+) {
+  return <Comp {...props} ref={forwardedRef} />;
+}) as ForwardRefComponent<'div', unknown>;
 
 const DEFAULT_PROPS = {
   size: 'medium',
   variant: 'default',
   isOutlined: false,
+  isLight: false,
   isGhost: false,
 } as const;
 
 
-function BadgeComponent(
+function Badge(
   props: BadgeProps,
-  ref: ForwardedRef<HTMLDivElement>
+  ref: ForwardedRef<HTMLButtonElement | HTMLDivElement>
 ): ReactElement {
   const p = { ...DEFAULT_PROPS, ...props };
   const domRef = useOptionalRef(ref);
 
-  const isInteractive = !!p.onDismiss;
+  const isInteractive = p.isDismissible && p.onDismiss;
   const { buttonProps, isPressed } = useButton(p, domRef);
-  const { hoverProps, isHovered } = useHover({isDisabled: !isInteractive});
+  const { hoverProps, isHovered } = useHover({});
   const interactiveProps = isInteractive ? [buttonProps, hoverProps] : [];
   const behaviorProps = mergeProps(...interactiveProps);
 
-  const hasAvatar = p.image;
-  const hasIcon = p.icon || hasAvatar
   return (
-    <div
+    <PolymorphicBadge
+      as={isInteractive ? 'button' : 'div'}
       {...behaviorProps}
       className={clsx([
         `${ROOT} size-${p.size} variant-${p.variant}`,
@@ -97,8 +110,8 @@ function BadgeComponent(
           'is-outline': p.isOutline,
           'is-light': p.isLight,
           'is-ghost': p.isGhost,
-          'has-icon': hasIcon,
-          'has-avatar': hasAvatar,
+          'has-icon': p.icon,
+          'has-avatar': p.avatar,
           'is-interactive': isInteractive,
           'is-hovered': isHovered,
           'is-pressed': isPressed,
@@ -106,27 +119,18 @@ function BadgeComponent(
         p.className,
       ])}
     >
-      {hasIcon ? hasAvatar ? (
-        <Avatar
-          image={p.image}
-          size="custom"
-          className={el`avatar`}
-        />
-      ) : (
-        <Icon className={el`icon`} content={p.icon} size="custom" />
-      ) : null}
+      {p.icon && <Icon className={el`icon`} content={p.icon} size="custom" />}
+      {p.avatar && <Avatar image={p.avatar} size="custom" className={el`avatar`} />}
       {p.children}
-      {p.onDismiss && (
+      {isInteractive && (
         <DismissButton
           onPress={p.onDismiss}
           size='custom'
           className={el`dismiss-button`}
         />
       )}
-    </div>
+    </PolymorphicBadge>
   );
 }
-
-const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(BadgeComponent);
 
 export default Badge;

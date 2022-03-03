@@ -11,6 +11,7 @@ export default {
   component: Badge,
 };
 
+const AVATAR_URL = 'https://img.freepik.com/free-vector/mysterious-mafia-man-smoking-cigarette_52683-34828.jpg';
 // playground
 
 const PlaygroundTemplate: Story<BadgeProps> = (props) => {
@@ -29,51 +30,48 @@ Playground.args = {
 };
 enableAddons(Playground, ['controls', 'actions', 'a11y', 'backgrounds']);
 
-const BadgeByContent = (
-  { variant, size, isOutline, isLight, isGhost, children }: Pick<BadgeProps, 'variant' | 'size' | 'isOutline' | 'isLight' | 'isGhost' | 'children'>
-): ReactElement => {
-
-  const defaultProps = {
-    variant, size, isOutline, isLight, isGhost
-  };
-
+const BadgeByContent = (props: BadgeProps): ReactElement => {
+  const { children, ...others } = props;
   return (
     <div className='flex gap-2 flex-wrap my-2'>
-      <Badge {...defaultProps}>{children}</Badge>
+      <Badge {...others}>{children}</Badge>
 
-      <Badge {...defaultProps} icon={createRingInfo}>
+      <Badge {...others} icon={createRingInfo}>
         {children}
       </Badge>
 
-      <Badge {...defaultProps} onDismiss={action('press')}>
+      <Badge {...others} onDismiss={action('press')} isDismissible>
         {children}
       </Badge>
 
       <Badge
-        {...defaultProps}
+        {...others}
         icon={createRingInfo}
         onDismiss={action('press')}
+        isDismissible
       >
         {children}
       </Badge>
 
-      <Badge {...defaultProps} image='/images/avatar.png'>
+      <Badge {...others} avatar={AVATAR_URL}>
         {children}
       </Badge>
 
       <Badge
-        {...defaultProps}
-        image='/images/avatar.png'
+        {...others}
+        avatar={AVATAR_URL}
         onDismiss={action('press')}
+        isDismissible
       >
         {children}
       </Badge>
 
       <Badge
-        {...defaultProps}
+        {...props}
         icon={createRingInfo}
-        image='/images/avatar.png'
+        avatar={AVATAR_URL}
         onDismiss={action('press')}
+        isDismissible
       >
         {children}
       </Badge>
@@ -81,42 +79,39 @@ const BadgeByContent = (
   )
 }
 
-const BadgeByOutline = (
-  { size, variant, title }: Pick<BadgeProps, 'size' | 'variant'> & { title: string }
-): ReactElement => {
+const BadgeByOutline = (props: BadgeProps & { title: string }): ReactElement => {
+  const { title, ...others } = props;
   return (
     <div className='flex flex-col gap-2'>
       <h2 className='text-body-lg-heavy my-2'>{title}</h2>
-      <BadgeByContent size={size} variant={variant}>
+      <BadgeByContent {...others}>
         Normal
       </BadgeByContent>
 
-      <BadgeByContent size={size} variant={variant} isOutline>
+      <BadgeByContent {...others} isOutline>
         Outlined
       </BadgeByContent>
 
-      <BadgeByContent size={size} variant={variant} isLight>
+      <BadgeByContent {...others} isLight>
         Light Mode
       </BadgeByContent>
 
-      <BadgeByContent size={size} variant={variant} isOutline isLight>
+      <BadgeByContent {...others} isOutline isLight>
         Outline and Light
       </BadgeByContent>
 
-      <BadgeByContent size={size} variant={variant} isGhost>
+      <BadgeByContent {...others} isGhost>
         Ghost
       </BadgeByContent>
     </div>
   )
 }
 
-const BadgeBySize = (
-  { variant }: Pick<BadgeProps, 'variant'>
-): ReactElement => {
+const BadgeBySize = (props: BadgeProps): ReactElement => {
   return (
     <div className='flex flex-col gap-y-4'>
-      <BadgeByOutline title='Small Badges' size='small' variant={variant} />
-      <BadgeByOutline title='Medium Badges' size='medium' variant={variant} />
+      <BadgeByOutline {...props} title='Small Badges' size='small' />
+      <BadgeByOutline {...props} title='Medium Badges' size='medium' />
     </div>
   )
 }
