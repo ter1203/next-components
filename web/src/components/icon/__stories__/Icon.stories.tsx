@@ -84,44 +84,42 @@ export const Colors = (): ReactElement => (
 // path icons
 
 const PathIconsComponent = (
-  { prefix, icons }: { prefix: string, [key: string]: any }
+  { prefix, icons, title }: { prefix: string, title: string, icons: { [key: string]: any } }
 ): ReactElement => (
-  <div className="grid grid-cols-3 gap-[2rem]">
-    {Object.entries(icons)
-      .sort(([nameA], [nameB]) => {
-        if (nameA < nameB) return -1;
-        if (nameA > nameB) return 1;
-        return 0;
-      })
-      .map(([name, path]) => (
-        <div className="flex flex-col items-center gap-[.5rem]">
-          <Icon key={name} content={`${path}`} />
-          <p className="text-body-lg text-dark text-center">
-            {name
-              .substr(prefix.length)
-              .replace(/([A-Z])/g, ' $1')
-              .trim()
-              .toLowerCase()
-            }
-            <br />
-            {name}
-          </p>
+  <section className="flex flex-col justify-start items-center my-[2rem]">
+    <h2 className="text-body-lg-heavy my-[1rem]">{title}</h2>
+    <div className="grid grid-cols-3 gap-[2rem]">
+      {Object.entries(icons)
+        .sort(([nameA], [nameB]) => {
+          if (nameA < nameB) return -1;
+          if (nameA > nameB) return 1;
+          return 0;
+        })
+        .map(([name, path]) => (
+          <div className="flex flex-col items-center gap-[.5rem]">
+            <Icon key={name} content={`${path}`} />
+            <p className="text-body-lg text-dark text-center">
+              {name
+                .substr(prefix.length)
+                .replace(/([A-Z])/g, ' $1')
+                .trim()
+                .toLowerCase()
+              }
+              <br />
+              {name}
+            </p>
 
-        </div>
-      ))}
-  </div>
+          </div>
+        ))}
+    </div>
+  </section>
 );
 
 export const PathIcons = (): ReactElement => (
   <div>
-    <section className="flex flex-col justify-start items-center my-[2rem]">
-      <h2 className="text-body-lg-heavy my-[1rem]">Feather Icons</h2>
-      <PathIconsComponent icons={featherIcons} prefix='feather' />
-    </section>
-    <section className="flex flex-col justify-start items-center my-[2rem]">
-      <h2 className="text-body-lg-heavy my-[1rem]">Custom Path Icons</h2>
-      <PathIconsComponent icons={pathIcons} prefix='create' />
-    </section>
+    <PathIconsComponent icons={featherIcons} prefix='feather' title='Feather Icons' />
+    <PathIconsComponent icons={heroIcons} prefix='feather' title='Hero Icons' />
+    <PathIconsComponent icons={pathIcons} prefix='feather' title='Custom Path Icons' />
   </div>
 );
 
@@ -148,10 +146,4 @@ export const SvgIcons = (): ReactElement => (
         </div>
       ))}
   </div>
-);
-
-// hero icons
-
-export const HeroIcons = (): ReactElement => (
-  <PathIconsComponent icons={heroIcons} prefix='hero' />
 );
