@@ -118,8 +118,8 @@ const PathIconsComponent = (
 export const PathIcons = (): ReactElement => (
   <div>
     <PathIconsComponent icons={featherIcons} prefix='feather' title='Feather Icons' />
-    <PathIconsComponent icons={heroIcons} prefix='feather' title='Hero Icons' />
-    <PathIconsComponent icons={pathIcons} prefix='feather' title='Custom Path Icons' />
+    <PathIconsComponent icons={heroIcons} prefix='hero' title='Hero Icons' />
+    <PathIconsComponent icons={pathIcons} prefix='create' title='Custom Path Icons' />
   </div>
 );
 
