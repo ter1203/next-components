@@ -70,20 +70,20 @@ $ROOT: shared.makeRoot("Badge");
 
 #{$ROOT} {
   @apply rounded-md overflow-hidden select-none whitespace-nowrap;
-  @apply inline-flex justify-center items-center gap-[4px] px-[6px] py-[4px];
+  @apply flex justify-center items-center gap-[4px] cursor-default;
   @apply focus:outline-none transition-colors w-auto opacity-90 bg-transparent;
 
   // sizes
 
   &.size-small {
-    @apply text-body-sm-heavy leading-[20px] h-[20px];
+    @apply text-body-sm-heavy h-[20px] px-[6px] py-[4px];
   }
 
   &.size-medium {
-    @apply text-body-md-heavy h-[24px];
+    @apply text-body-md-heavy h-[24px] px-[8px] py-[4px];
   }
 
-  &.is-hovered {
+  &.is-interactive {
     @apply cursor-pointer;
   }
 
@@ -156,7 +156,7 @@ $ROOT: shared.makeRoot("Badge");
   }
 
   &.variant-danger {
-    @include interactiveColorsForVariant("danger");
+    @include interactiveColorsForVariant("orange");
   }
 
   &.variant-info {

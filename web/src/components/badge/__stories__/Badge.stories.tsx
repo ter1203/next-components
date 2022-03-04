@@ -57,6 +57,14 @@ const BadgeByContent = (props: BadgeProps): ReactElement => {
 
       <Badge
         {...props}
+        avatar={AVATAR_URL}
+        onDismiss={action('press')}
+        isDismissible
+        isDisabled
+      />
+
+      <Badge
+        {...props}
         icon={createRingInfo}
         avatar={AVATAR_URL}
         onDismiss={action('press')}
