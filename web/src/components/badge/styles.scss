@@ -1,8 +1,8 @@
-@use "../../utils/shared";
+@use '../../utils/shared';
 
 // config
 
-$ROOT: shared.makeRoot("Badge");
+$ROOT: shared.makeRoot('Badge');
 @function el($name) {
   @return shared.makeSubElementName($ROOT, $name);
 }

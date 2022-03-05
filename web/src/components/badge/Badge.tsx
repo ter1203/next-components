@@ -127,7 +127,7 @@ function Badge(
       {p.icon && <Icon className={el`icon`} content={p.icon} size="custom" />}
       {p.avatar && <Avatar image={p.avatar} size="custom" className={el`avatar`} />}
       {p.children}
-      {isInteractive && (
+      {p.isDismissible && (
         <DismissButton
           onPress={p.onDismiss}
           size='custom'

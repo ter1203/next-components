@@ -17,7 +17,7 @@ const AVATAR_URL = 'https://img.freepik.com/free-vector/mysterious-mafia-man-smo
 const PlaygroundTemplate: Story<BadgeProps> = (props) => {
   return (
     <div className="flex justify-center">
-      <Badge {...props}>Text</Badge>
+      <Badge {...props}>Badge</Badge>
     </div>
   );
 };
@@ -74,30 +74,19 @@ const BadgeByContent = (props: BadgeProps): ReactElement => {
   )
 }
 
-const BadgeByOutline = (props: BadgeProps & { title: string }): ReactElement => {
-  const { title, ...others } = props;
+const BadgeByOutline = (props: BadgeProps): ReactElement => {
   return (
     <div className='flex flex-col gap-2'>
-      <h2 className='text-body-lg-heavy my-2'>{title}</h2>
-      <BadgeByContent {...others}>
-        Normal
-      </BadgeByContent>
-
-      <BadgeByContent {...others} isOutline>
-        Outlined
-      </BadgeByContent>
-
-      <BadgeByContent {...others} isLight>
-        Light Mode
-      </BadgeByContent>
-
-      <BadgeByContent {...others} isOutline isLight>
-        Outline and Light
-      </BadgeByContent>
-
-      <BadgeByContent {...others} isGhost>
-        Ghost
-      </BadgeByContent>
+      <h2 className='text-body-md-heavy my-0'>Normal</h2>
+      <BadgeByContent {...props} />
+      <h2 className='text-body-md-heavy my-0'>Light</h2>
+      <BadgeByContent {...props} isLight />
+      <h2 className='text-body-md-heavy my-0'>Ghost</h2>
+      <BadgeByContent {...props} isGhost />
+      <h2 className='text-body-md-heavy my-0'>Outlined</h2>
+      <BadgeByContent {...props} isOutline />
+      <h2 className='text-body-md-heavy my-0'>Outlined + Light</h2>
+      <BadgeByContent {...props} isOutline isLight />
     </div>
   )
 }
@@ -105,8 +94,15 @@ const BadgeByOutline = (props: BadgeProps & { title: string }): ReactElement => 
 const BadgeBySize = (props: BadgeProps): ReactElement => {
   return (
     <div className='flex flex-col gap-y-4'>
-      <BadgeByOutline {...props} title='Small Badges' size='small' />
-      <BadgeByOutline {...props} title='Medium Badges' size='medium' />
+      <h2 className='text-body-lg-heavy my-2'>Small Badges</h2>
+      <BadgeByOutline {...props} size='small'>
+        Badge
+      </BadgeByOutline>
+
+      <h2 className='text-body-lg-heavy my-2'>Medium Badges</h2>
+      <BadgeByOutline {...props} size='medium'>
+        Badge
+      </BadgeByOutline>
     </div>
   )
 }
