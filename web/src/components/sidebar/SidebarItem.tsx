@@ -115,7 +115,7 @@ function SidebarItemComponent(
         <Text className={el`item-label`}>
           {p.children}
         </Text>
-        {p.badge && <Badge variant='primary' isOutline className={el`item-badge`}>{p.badge}</Badge>}
+        {p.badge && <Badge className={el`item-badge`}>{p.badge}</Badge>}
         {isInteractive && <div className={el`overlay`} />}
       </div>
     </OptionalTooltip>

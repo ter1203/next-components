@@ -7,7 +7,7 @@ const { parseSync } = require('xml-reader');
 const Svg = require('oslllo-svg-fixer/src/svg');
 
 const ICON_VIEWBOX_SIZE = 20;
-const TEMP_FOLDER = './temp';
+const TEMP_FOLDER_FOR_SVG_CONVERT = './svg-temp';
 
 type IconBuffer = {
   name: string;
@@ -15,13 +15,13 @@ type IconBuffer = {
 }
 
 export async function prepare() {
-  if (!await exists(TEMP_FOLDER)) {
-    await fsPromise.mkdir(TEMP_FOLDER);
+  if (!await exists(TEMP_FOLDER_FOR_SVG_CONVERT)) {
+    await fsPromise.mkdir(TEMP_FOLDER_FOR_SVG_CONVERT);
   }
 }
 
 export async function finalize() {
-  await fsPromise.rmdir(TEMP_FOLDER, { recursive: true });
+  await fsPromise.rmdir(TEMP_FOLDER_FOR_SVG_CONVERT, { recursive: true });
 }
 
 /**
@@ -97,17 +97,17 @@ async function scaleIcon(icon: File, prefix: string): Promise<IconBuffer> {
  * @param tempFolder Temporary folder to be used for temp storage
  * @returns Fixed icons buffer
  */
-export async function fixIcons(icons: IconBuffer[]): Promise<IconBuffer[]> {
+export async function convertStrokeIconsToFill(icons: IconBuffer[]): Promise<IconBuffer[]> {
   process.stdout.write('Converting stroke to fill ... ')
-  const result = await Promise.all(icons.map(icon => fixIcon(icon.name, icon.content)));
+  const result = await Promise.all(icons.map(icon => convertStrokeIconToFill(icon.name, icon.content)));
   process.stdout.write('done\n');
 
   return result;
 }
 
 // Convert paths of svg icon from stroke into fill
-async function fixIcon(name: string, content: string): Promise<IconBuffer> {
-  const filepath = `${TEMP_FOLDER}/${name}.svg`
+async function convertStrokeIconToFill(name: string, content: string): Promise<IconBuffer> {
+  const filepath = `${TEMP_FOLDER_FOR_SVG_CONVERT}/${name}.svg`
   await fsPromise.writeFile(filepath, content);
   const fixed = await new Svg(filepath).process();
   return {
@@ -124,10 +124,10 @@ async function fixIcon(name: string, content: string): Promise<IconBuffer> {
  */
 function getIconVariableNameFromPath(prefix: string, filepath: string) {
   const basename = path.basename(filepath);
-  const extPos = basename.lastIndexOf('.');
+  const extentionPosition = basename.lastIndexOf('.');
   let filename = basename;
-  if (extPos > 0) {
-    filename = basename.slice(0, extPos);
+  if (extentionPosition > 0) {
+    filename = basename.slice(0, extentionPosition);
   }
 
   return `${prefix}${filename.split('-').map(
@@ -167,7 +167,7 @@ export async function writeIcons(icons: any, outPath: string, comment = ''): Pro
 
 /**
  * @param path File or folder path
- * @returns Whether the given path exists on the fs
+ * @returns Whether the given path exists on the file system
  */
 async function exists(path: string): Promise<boolean> {
   try {
