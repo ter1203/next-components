@@ -52,7 +52,7 @@ export type AvatarProps = StyleProps &
      * The avatar size.
      * @default "medium"
      */
-    size?: 'xs' | 'small' | 'medium' | 'large' | 'xl' | '2xl';
+    size?: 'xs' | 'small' | 'medium' | 'large' | 'xl' | '2xl' | 'custom';
   };
 
 const ROOT = makeRootClassName('Avatar');
