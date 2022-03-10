@@ -57,7 +57,7 @@ $FADEIN_DURATION: 0.25s;
 }
 
 #{el('image')} {
-  @apply object-cover w-full h-full rounded;
+  @apply object-cover w-full h-full rounded-full;
 }
 
 #{el('initials')} {
