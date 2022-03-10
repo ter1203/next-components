@@ -17,7 +17,8 @@
     "plop": "plop --plopfile scripts/plopfile.js",
     "plop:src": "plop --plopfile scripts/plopfile.js -- --where '@/components'",
     "plop:here": "plop --plopfile scripts/plopfile.js -- --where './components'",
-    "update:icons:feather": "ts-node --project ./node.tsconfig.json scripts/icon-creators/feather.ts src/assets/icons/feather-paths.ts"
+    "update:icons:feather": "ts-node --project ./node.tsconfig.json scripts/icon-creators/feather.ts src/assets/icons/feather-paths.ts",
+    "update:icons:hero": "ts-node --project ./node.tsconfig.json scripts/icon-creators/hero.ts src/assets/icons/hero-paths.ts"
   },
   "dependencies": {
     "@apollo/client": "^3.5.8",
